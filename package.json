@@ -6,8 +6,14 @@
     "start": "node app.js"
   },
   "dependencies": {
-    "express": "3.2.6",
+    "express": "4.13.4",
     "ejs": "*",
-    "mysql":"*"
+    "mysql":"*",
+    "serve-favicon" : "*",
+    "morgan" : "*",
+    "body-Parser" : "*",
+    "method-override":"*",
+    "error-handler":"*",
+    "cookie-parser": "*"
   }
 }

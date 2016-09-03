@@ -1,35 +1,66 @@
-
 /**
  * Module dependencies.
  */
 
-var express = require('express')
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , http = require('http')
-  , path = require('path');
+var express = require('express'), 
+	routes = require('./routes/index'), 
+	user = require('./routes/user'), 
+	http = require('http'), 
+	path = require('path'), 
+	favicon = require('serve-favicon'), 
+	cookieParser = require('cookie-parser'),
+	logger = require('morgan'), 
+	bodyParser = require('body-Parser'), 
+	methodOverride = require('method-override'), 
+	errorHandler = require('error-handler'),
+	url = require('url'),
+	ejs = require('ejs');
 
 var app = express();
-
+//var router = express.Router();
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
+app.engine('.html', require('ejs').renderFile);  
+app.set('view engine', 'html');
+//app.use(favicon);
+//定义日志和输出级别
+app.use(logger('dev'));
+//定义数据解析器
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride());
+//app.use(router);
+//定义cookie解析器
+app.use(cookieParser());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/', routes);
 // development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
+if ('development' === process.env.NODE_ENV) {
+	app.use(errorHandler());
+};
+
+
+app.use(function(req, res, next) {
+	  var err = new Error('Not Found');
+	  err.status = 404;
+	  next(err);
+});
+
+//开发环境，500错误处理和错误堆栈跟踪
+if (process.env.NODE_ENV === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
 }
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+http.createServer(app).listen(app.get('port'), function() {
+	console.info(__dirname);
+	console.log('Express server listening on port ' + app.get('port'));
 });
