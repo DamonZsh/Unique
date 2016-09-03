@@ -30,7 +30,7 @@ module.exports=query;
 
 
 //在js类使用如下
-//var query=require("./lib/mysql.js");
+//var query=require("./lib/DBPool.js");
 //
 //query("select 1 from 1",function(err,vals,fields){
 //    //do something

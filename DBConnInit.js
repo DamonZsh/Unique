@@ -6,15 +6,15 @@ var http = require('http');
 var mysql = require('mysql');
 var conn = null;
 
-TEST_DATABASE = "nodejs";
-TEST_TABLE = "msg";
+var TEST_DATABASE = "nodejs";
+var TEST_TABLE = "fileTable";
 
 var options = {
 	host : 'localhost',
 	port : '3306',
 	user : 'root',
 	password : 'root'
-}
+};
 
 conn = mysql.createConnection(options);
 conn.connect(function(err) {
@@ -28,7 +28,7 @@ conn.query('create database ' + TEST_DATABASE);
 
 conn.query("use " + TEST_DATABASE);
 
-conn.query('create table ' + TEST_TABLE
+conn.query("create table " + TEST_TABLE
 		+ "(id INT(11) AUTO_INCREMENT, name varchar(255), primary key (id) )");
 
 conn.query("insert into " + TEST_TABLE + "(name) values ('nodejs_1')");
