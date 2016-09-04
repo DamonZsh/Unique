@@ -17,8 +17,17 @@ router.get('/list_share', function (req, res) {
 
 router.post("/upload", function (req, res) {
     // can't get request body, shit!
-    console.log(req.body);
-    console.log(req.file);
+    var content = '';
+    req.on('data', function (data) {
+        // Append data.
+        content += data;
+    });
+    req.on('end', function () {
+        // Assuming, we're receiving JSON, parse the string into a JSON object to return.
+        // var data = JSON.parse(content);
+        // res.render('index', { txtName: data.txtName });
+    });
+    console.log(content);
     res.end("ok")
 });
 
