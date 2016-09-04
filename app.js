@@ -4,8 +4,8 @@
 
 var express = require('express'),
     routes = require('./routes/index'),
-    share_routes = require('./routes/share')
-http = require('http'),
+    share_routes = require('./routes/share'),
+    http = require('http'),
     path = require('path'),
     favicon = require('serve-favicon'),
     cookieParser = require('cookie-parser'),
@@ -14,7 +14,6 @@ http = require('http'),
     methodOverride = require('method-override'),
     errorHandler = require('error-handler'),
     url = require('url'),
-    // form = require('connect-form'),
     ejs = require('ejs');
 
 var app = express();
@@ -35,9 +34,7 @@ app.use(methodOverride());
 //app.use(router);
 //定义cookie解析器
 app.use(cookieParser());
-
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', routes);
 app.use('/share', share_routes);
 // development only
