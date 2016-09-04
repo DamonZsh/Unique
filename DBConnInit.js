@@ -36,9 +36,9 @@ conn.query("insert into " + TEST_TABLE + "(name) values ('nodejs_1')");
 conn.query("insert into " + TEST_TABLE + "(name) values ('nodejs_2')");
 
 
-conn.query("CREATE TABLE user (iduser INT(11) , username varchar(16) NOT NULL, email varchar(255) NULL, password varchar(32) NOT NULL, create_time datetime NULL DEFAULT CURRENT_TIMESTAMP)");
+conn.query("CREATE TABLE user (iduser INT(11)  AUTO_INCREMENT , username varchar(16) NOT NULL, email varchar(255) NULL, password varchar(32) NOT NULL, create_time datetime NULL DEFAULT CURRENT_TIMESTAMP, primary key(iduser))");
 
-conn.query("CREATE TABLE sharing (idsharing INT(11), user_id INT(11) NOT NULL,file_location VARCHAR(400) NULL DEFAULT NULL,file_original_name VARCHAR(450) NULL DEFAULT NULL,save_time INT(11) NULL DEFAULT NULL, creation_date DATETIME NULL DEFAULT NULL,PRIMARY KEY (idsharing) ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
+conn.query("CREATE TABLE sharing (idsharing INT(11) AUTO_INCREMENT, user_id INT(11) NOT NULL,file_location VARCHAR(400) NULL DEFAULT NULL,file_original_name VARCHAR(450) NULL DEFAULT NULL,save_time INT(11) NULL DEFAULT NULL, creation_date DATETIME NULL DEFAULT NULL,PRIMARY KEY (idsharing) ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
 
 conn.query("CREATE TABLE mail_to (sharing_id INT(11) NULL DEFAULT NULL,user_id INT(11) NULL DEFAULT NULL) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
 
