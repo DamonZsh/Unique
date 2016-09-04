@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不用引入） -->
+    <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/dropZone.css">
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="http://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="/javaScript/dropZone.js"></script>
+</head>
+<body>
+<h1><%= title %></h1>
+<div class="row show">
+
+    <div class="col-lg-2">
+        <ul class="nav nav-pills nav-stacked" role="tablist">
+            <li role="presentation" class="active"><a href="#">Share</a></li>
+            <li role="presentation"><a href="#">My Sharing</a></li>
+        </ul>
+
+    </div>
+
+    <div class="col-lg-4">
+        <div class="form-group">
+            <label for="save_time">Saving Times</label>
+            <select name="save_time" class="selectpicker" id="save_time">
+                <option value="1">One Day</option>
+                <option value="2">Two Days</option>
+                <option value="3">Three Days</option>
+                <option value="4">One Week</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <form action="/share/upload" class="dropzone" id="my-awesome-dropzone" enctype="multipart/form-data">
+                <input type="file" name="file" multiple="multiple"/>
+            </form>
+            <button class="btn btn-primary"><span class="glyphicon glyphicon-send">  </span> Email</button>
+        </div>
+
+    </div>
+</body>
+</html>

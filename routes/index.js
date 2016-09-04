@@ -28,6 +28,7 @@ router.get('/logout', function(req, res) {
   	res.render('logout', { title: 'logout' });
 });
 
+
 ///*hompage*/
 //router.post('/homepage', function(req, res) {
 //	var query_doc = {userid: req.body.userid, password: req.body.password};
