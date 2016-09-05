@@ -8,8 +8,18 @@ var router = express.Router();
 var multer = require('multer');
 var fs = require("fs");
 var uuid = require("node-uuid");
+var mysql = require('mysql');
 
 var u = multer({dist: "temp/"});
+
+var conn = null;
+var options = {
+    host: 'localhost',
+    port: '3306',
+    user: 'root',
+    password: 'root',
+    database: 'nodejs'
+};
 
 
 /* GET home page. */
@@ -43,6 +53,21 @@ router.post("/save_upload", function (req, res) {
     console.log(poster);
     console.log(mails);
     console.log(save_time);
+
+    conn = mysql.createConnection(options);
+    conn.connect(function (err) {
+        if (err) {
+            console.error("connect db " + options.host + " error: " + err);
+            process.exit();
+        }
+    });
+    conn.query("insert into sharing values(0,?,?,?,?,?,?,?)", [poster, nfn, ofn, mails, new Date(), new Date(), "1"], function (err) {
+        if (err) {
+            console.log(err);
+            res.end("ERROR");
+        }
+    });
+    conn.end();
     res.end("shared file has mailed to audiences.");
 });
 
