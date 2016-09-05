@@ -36,7 +36,6 @@ app.use(methodOverride());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
-app.use('/share', share_routes);
 // development only
 if ('development' === process.env.NODE_ENV) {
     app.use(errorHandler());
