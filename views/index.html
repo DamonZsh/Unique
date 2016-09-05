@@ -19,7 +19,12 @@
                 }
             },
             init: function () {
-                this.on("success", function(file) { alert("Added file."); });
+                this.on("success", function (file, done) {
+//                    alert(file.name);
+//                    alert(done);
+                    document.getElementById("ofn").value = file.name;
+                    document.getElementById("nfn").value = done;
+                });
             }
         };
     </script>
@@ -27,11 +32,24 @@
 <body>
 <h1><%= title %></h1>
 <div class="row show">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-8">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-8">
+        <div class="form-group">
+            <form action="/upload" method="post" enctype="multipart/form-data" class="dropzone"
+                  id="my-awesome-dropzone">
+            </form>
+        </div>
+        <form action="/save_upload" method="post">
+            <input type="hidden" name="original_file_name" id="ofn">
+            <input type="hidden" name="new_file_name" id="nfn">
             <div class="form-group">
-                <form action="/upload" method="post" enctype="multipart/form-data" class="dropzone" id="my-awesome-dropzone">
-                </form>
+                <label for="poster">Poster</label>
+                <input name="poster" id="poster" type="text">
+            </div>
+            <div class="form-group">
+                <label for="mails">Mails</label>
+                <textarea name="mails" id="mails" rows="5" cols="40">please use ";" to multi addresses.
+                </textarea>
             </div>
             <div class="form-group">
                 <label for="save_time">Saving Times</label>
@@ -43,10 +61,9 @@
                 </select>
             </div>
             <div class="form-group">
-                <input type="file" name="avatar" multiple="multiple" style="display: none;"/>
                 <button class="btn btn-primary"><span class="glyphicon glyphicon-send">  </span> Email</button>
             </div>
-
-        </div>
+        </form>
+    </div>
 </body>
 </html>
