@@ -8,7 +8,7 @@ var pool = mysql.createPool({
 	port : '3306',
 	user : 'root',
 	password : 'root',
-	database : ''
+	database : 'nodejs'
 });
 
 var query=function(sql,callback){
