@@ -8,8 +8,43 @@ var router = express.Router();
 var multer = require('multer');
 var fs = require("fs");
 var uuid = require("node-uuid");
+var mysql = require('mysql');
+var schedule = require('node-schedule');
 
 var u = multer({dist: "temp/"});
+
+var conn = null;
+var options = {
+    host: 'localhost',
+    port: '3306',
+    user: 'root',
+    password: 'root',
+    database: 'nodejs'
+};
+
+
+function scheduleCronstyle() {
+    schedule.scheduleJob('2 * * * * *', function () {
+        console.log('schedule to update expired sharing:' + new Date());
+        conn = mysql.createConnection(options);
+        conn.connect(function (err) {
+            if (err) {
+                console.error("connect db " + options.host + " error: " + err);
+                process.exit();
+            }
+        });
+        conn.query("update nodejs.sharing set status = 0 where expire_date < current_time() and status = 1", function (err, result) {
+            if (err) {
+                console.log(err);
+                res.end("ERROR");
+            }
+            console.log("updated rows is "+ result.affectedRows);
+        });
+        conn.end();
+    });
+}
+
+scheduleCronstyle();
 
 
 /* GET home page. */
@@ -38,11 +73,31 @@ router.post("/save_upload", function (req, res) {
     var mails = req.body["mails"];
     var save_time = req.body["save_time"];
 
-    console.log(ofn);
-    console.log(nfn);
-    console.log(poster);
-    console.log(mails);
-    console.log(save_time);
+    var expired_date;
+    var current = new Date();
+    if (save_time == 1) {
+        expired_date = new Date(current.getTime() + 1 * 24 * 60 * 60 * 1000);
+    } else if (save_time == 2) {
+        expired_date = new Date(current.getTime() + 2 * 24 * 60 * 60 * 1000);
+    } else if (save_time == 3) {
+        expired_date = new Date(current.getTime() + 3 * 24 * 60 * 60 * 1000);
+    } else {
+        expired_date = new Date(current.getTime() + 7 * 24 * 60 * 60 * 1000);
+    }
+    conn = mysql.createConnection(options);
+    conn.connect(function (err) {
+        if (err) {
+            console.error("connect db " + options.host + " error: " + err);
+            process.exit();
+        }
+    });
+    conn.query("insert into sharing values(0,?,?,?,?,?,?,?)", [poster, nfn, ofn, mails, current, expired_date, "1"], function (err) {
+        if (err) {
+            console.log(err);
+            res.end("ERROR");
+        }
+    });
+    conn.end();
     res.end("shared file has mailed to audiences.");
 });
 

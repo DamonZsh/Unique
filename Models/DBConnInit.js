@@ -29,7 +29,7 @@ conn.query('create database ' + TEST_DATABASE);
 conn.query("use " + TEST_DATABASE);
 
 
-conn.query("CREATE TABLE sharing (idsharing INT(11) AUTO_INCREMENT, poster varchar(45) NOT NULL,file_location VARCHAR(400) NULL DEFAULT NULL,file_original_name VARCHAR(450) NULL DEFAULT NULL,save_time INT(11) NULL DEFAULT NULL, creation_date DATETIME NULL DEFAULT NULL,  expire_date DATETIME NULL DEFAULT NULL, status int, PRIMARY KEY (idsharing) ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
+conn.query("CREATE TABLE sharing (idsharing INT(11) AUTO_INCREMENT, poster varchar(45) NOT NULL,file_location VARCHAR(400) NULL DEFAULT NULL,file_original_name VARCHAR(450) NULL DEFAULT NULL,mails VARCHAR(450) NULL DEFAULT NULL, creation_date DATETIME NULL DEFAULT NULL,  expire_date DATETIME NULL DEFAULT NULL, status int, PRIMARY KEY (idsharing) ) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
 
 conn.query("CREATE TABLE mail_to (sharing_id INT(11) NULL DEFAULT NULL,user_id INT(11) NULL DEFAULT NULL) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
 
