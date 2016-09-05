@@ -9,6 +9,7 @@ var multer = require('multer');
 var fs = require("fs");
 var uuid = require("node-uuid");
 var mysql = require('mysql');
+var schedule = require('node-schedule');
 
 var u = multer({dist: "temp/"});
 
@@ -20,6 +21,30 @@ var options = {
     password: 'root',
     database: 'nodejs'
 };
+
+
+function scheduleCronstyle() {
+    schedule.scheduleJob('2 * * * * *', function () {
+        console.log('schedule to update expired sharing:' + new Date());
+        conn = mysql.createConnection(options);
+        conn.connect(function (err) {
+            if (err) {
+                console.error("connect db " + options.host + " error: " + err);
+                process.exit();
+            }
+        });
+        conn.query("update nodejs.sharing set status = 0 where expire_date < current_time()", function (err, result) {
+            if (err) {
+                console.log(err);
+                res.end("ERROR");
+            }
+            console.log("updated rows is "+ result.affectedRows);
+        });
+        conn.end();
+    });
+}
+
+scheduleCronstyle();
 
 
 /* GET home page. */
