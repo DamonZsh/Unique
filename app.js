@@ -4,7 +4,6 @@
 
 var express = require('express'),
     routes = require('./routes/index'),
-    share_routes = require('./routes/share'),
     http = require('http'),
     path = require('path'),
     favicon = require('serve-favicon'),
