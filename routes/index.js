@@ -33,7 +33,7 @@ function scheduleCronstyle() {
                 process.exit();
             }
         });
-        conn.query("update nodejs.sharing set status = 0 where expire_date < current_time()", function (err, result) {
+        conn.query("update nodejs.sharing set status = 0 where expire_date < current_time() and status = 1", function (err, result) {
             if (err) {
                 console.log(err);
                 res.end("ERROR");
