@@ -16,6 +16,8 @@
     "serve-favicon": "~2.3.0",
     "mysql":"*",
     "method-override":"*",
-    "error-handler":"*"
+    "error-handler":"*",
+    "multer" : "~1.2.0",
+    "node-uuid" : "~1.4.7"
   }
 }
