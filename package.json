@@ -3,17 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "node bin/www"
   },
   "dependencies": {
-    "express": "4.13.4",
-    "ejs": "*",
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "ejs": "~2.4.1",
+    "express": "~4.13.4",
+    "less-middleware": "1.0.x",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0",
     "mysql":"*",
-    "serve-favicon" : "*",
-    "morgan" : "*",
-    "body-Parser" : "*",
     "method-override":"*",
-    "error-handler":"*",
-    "cookie-parser": "*"
+    "error-handler":"*"
   }
 }

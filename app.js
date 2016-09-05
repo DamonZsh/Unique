@@ -1,57 +1,46 @@
-/**
- * Module dependencies.
- */
+var express = require('express');
+var path = require('path');
+var favicon = require('serve-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var http = require('http');
 
-var express = require('express'),
-    routes = require('./routes/index'),
-    share_routes = require('./routes/share'),
-    http = require('http'),
-    path = require('path'),
-    favicon = require('serve-favicon'),
-    cookieParser = require('cookie-parser'),
-    logger = require('morgan'),
-    bodyParser = require('body-Parser'),
-    methodOverride = require('method-override'),
-    errorHandler = require('error-handler'),
-    url = require('url'),
-    ejs = require('ejs');
+var routes = require('./routes/index');
+
 
 var app = express();
-// var app = module.exports = express.createServer(form({ keepExtensions: true, uploadDir:'./uploads' }));
-//var router = express.Router();
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
 app.engine('.html', require('ejs').renderFile);
 app.set('view engine', 'html');
-//app.use(favicon);
-//定义日志和输出级别
+
+// uncomment after placing your favicon in /public
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
-//定义数据解析器
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(methodOverride());
-//app.use(router);
-//定义cookie解析器
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(require('less-middleware')(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
+
 app.use('/', routes);
-app.use('/share', share_routes);
-// development only
-if ('development' === process.env.NODE_ENV) {
-    app.use(errorHandler());
-}
 
 
-app.use(function (req, res, next) {
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
 });
 
-//开发环境，500错误处理和错误堆栈跟踪
-if (process.env.NODE_ENV === 'development') {
-    app.use(function (err, req, res, next) {
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+    app.use(function(err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -60,8 +49,15 @@ if (process.env.NODE_ENV === 'development') {
     });
 }
 
-
-http.createServer(app).listen(app.get('port'), function () {
-    console.info(__dirname);
-    console.log('Express server listening on port ' + app.get('port'));
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: {}
+    });
 });
+
+
+module.exports = app;
