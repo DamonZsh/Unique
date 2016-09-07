@@ -3,16 +3,16 @@
  */
 
 var enodemailer  = require('nodemailer');
-var mailServerAddress = "XXXX@XXX.com";
-var password = "XXXXXXXX";
+var mailServerAddress = "XXXXX";
+var password = "XXXX";
 var transporter = enodemailer.createTransport('host: "smtp.qq.com", auth: {  user: ' + mailServerAddress +  ', pass: '+ password +'}  ');
 
 var emailSender = function (options, callback) {
-    transporter.send(options, function(err, info){
+    transporter.sendMail(options, function(err, info){
         if(err){
-            return console.error(error);
-        }
-        console.log('Message sent: ' + info.response);
+           callback(err.toString());
+        }else
+            console.log('Message sent: ' + info.response);
     })
 }
 

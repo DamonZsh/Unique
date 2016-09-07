@@ -17,9 +17,11 @@ var query=function(sql,callback){
             callback(err,null,null);
         }else{
             conn.query(sql,function(qerr,vals,fields){
-                //释放连接
+                console.info('query start, sql = ' + sql);
+                //release the connection
                 conn.release();
-                //事件驱动回调
+                console.info('query completed, released connection');
+                //callback
                 callback(qerr,vals,fields);
             });
         }
