@@ -98,7 +98,7 @@ router.post("/save_upload", function (req, res) {
         }
     });
     conn.end();
-    res.end("shared file has mailed to audiences.");
+    res.end("ok");
 });
 
 module.exports = router;
