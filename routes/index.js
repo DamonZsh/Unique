@@ -71,4 +71,29 @@ router.post("/save_upload", function (req, res) {
     res.end("shared file has mailed to audiences.");
 });
 
+router.get("/download/:id",function (req,res) {
+    var id = req.params.id;
+    conn = mysql.createConnection(options);
+    conn.connect(function (err) {
+        if (err) {
+            console.error("connect db " + options.host + " error: " + err);
+            process.exit();
+        }
+    });
+    conn.query("select * from sharing where file_original_name = ?", [id], function selectRes(err, rows) {
+        if (err) {
+            console.log(err);
+            res.end("ERROR");
+        }
+        res.render("download",{poster:rows[0].poster,expiredDay:rows[0].expiredDay,fileName:rows[0].original_file_name});
+    });
+    conn.end();
+});
+
+router.get("/downloading/:fileName",function (req,res) {
+    var fileName = req.params.fileName;
+    var filePath = __dirname.replace("routes", "") + "public/files/" + fileName;
+    res.download("filePath");
+});
+
 module.exports = router;
