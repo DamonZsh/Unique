@@ -82,15 +82,21 @@ router.get("/download/:id",function (req,res) {
             console.log(err);
             res.end("ERROR");
         }
-        res.render("download",{poster:rows[0].poster,expiredDay:rows[0].expiredDay,fileName:rows[0].original_file_name});
+        res.render("download.html",{poster:rows[0].poster,expiredDay:rows[0].expiredDay,fileName:rows[0].original_file_name});
     });
     conn.end();
 });
 
 router.get("/downloading/:fileName",function (req,res) {
     var fileName = req.params.fileName;
+    console.log("file name is" + fileName);
     var filePath = __dirname.replace("routes", "") + "public/files/" + fileName;
-    res.download("filePath");
+    console.log("file path is:" + filePath);
+    res.download(filePath);
+});
+
+router.get("/testing",function(req,res){
+    res.render("testing",{poster:"Kevin",expiredDay:"2016-09-30",fileName:"test.txt",size:"30M"});
 });
 
 module.exports = router;

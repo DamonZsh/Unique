@@ -3,15 +3,32 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>download Site</title>
-    <script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/dropZone.css">
+    <script src="/javaScript/dropZone.js"></script>
+    <script src="/javaScript/jquery-3.1.0.min.js"></script>
 
+    <title>File Download</title>
+    <script>
     </script>
 </head>
 <body>
-    <div>Poster:<span id="poster" >{{poster}}</span>Expired Day:<span id="expiredDay">{{expiredDay}}</span></div>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span3"></div>
+        <div class="span6">
+            <div><h2>Welcome To Unique Down Loading Tools </h2></div>
+            <div><p class="label label-default"><%=poster%> has uploaded a file , you can download it through bellow link</p></div>
+            <div><p class="label label-default">The file will be delete at <%=expiredDay%></p></div>
 
-    <div>File:<p><a href="/downloading/{{fileName}}">{{fileName}}</a></p></div>
-    <div id="file"></div>
+            <table class="table table-bordered table-hover">
+                <thead><tr><th>File Name</th><th>Expired Day</th><th>Poster</th></tr></thead>
+                <tboday><tr><td><a href="/downloading/<%=fileName%>"><%=fileName%></a></td><td><%=expiredDay%></td><td><%=poster%></td></tr></tboday>
+            </table>
+        </div>
+        <div class="span3"></div>
+    </div>
+</div>
 </body>
 </html>
