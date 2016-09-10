@@ -8,7 +8,7 @@ var app = require('../app');
 var debug = require('debug')('untitled:server');
 var http = require('http');
 var schduleJob = require('../routes/scheduleJob.js');
-schduleJob.j;
+
 /**
  * Get port from environment and store in Express.
  */
@@ -22,6 +22,7 @@ app.set('port', port);
 
 var server = http.createServer(app).listen(app.get('port'), function() {
                  console.log('Express server listening on port ' + app.get('port'));
+                 schduleJob.j;
              });
 
 /**

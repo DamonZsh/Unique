@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="margin: 0; padding: 0;">
+  <h4>Hello! <%= name%> , <%= poster%> have shared some files to you.</h4>
+　 <table border="1" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+          <th> File Name </th>
+          <th> File Size </th>
+          <th> Effective Date </th>
+      </tr>
+      <% if (files.length) { %>
+      <% files.forEach(file, function()) {%>
+      <tr><td><%= files.name %></td><td><%= files.size %></td><td><%= files.effectiveDate %></td></tr>
+      <% }%>
+      <% }%>
+  </table>
+  <h4>Please <a herf=<%= link1%>>click here</a> to download or  <a herf=<%= link2%>>click here</a> to view the detail.</h4>
+</body>
+</html>
