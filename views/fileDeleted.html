@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/dropZone.css">
+    <script src="/javaScript/dropZone.js"></script>
+    <script src="/javaScript/bootstrap.min.js"></script>
+    <script src="/javaScript/jquery-3.1.0.min.js"></script>
+    <title>File not Found</title>
+    <style>
+        #imgId{
+            margin-top: 60px;
+        }
+        #head-bg{
+            width:100%;
+            height:60px;
+            left:0;
+            top:0;
+            padding-bottom:5px;
+        }
+        .stretch{
+            width:100%;
+            height:100%;
+        }
+        footer{
+            position:absolute;
+            bottom:0;
+            left:49%;
+        }
+    </style>
+    <script>
+        $(function(){
+            var height = $(window).height();
+            $("#middle").height(height);
+
+        });
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+<div class="row-fluid">
+
+    <div class="span2" id="left">
+    </div>
+    <div class="span8" id="middle" style="background: rgb(153, 158, 204);">
+
+        <div id="fontId"><h3 style="font-size: 30px">The file uploaded by <%=poster%> has been deleted.</h3></div>
+        <div id="imgId"><img src="/img/filedeleted1.png" style="padding-left: 200px;"/></div>
+        <footer>
+            <p>&copy;Unique 2016</p>
+        </footer>
+    </div>
+    <div class="span2" id="right">
+
+    </div>
+</div>
+</div>
+</body>
+</html>

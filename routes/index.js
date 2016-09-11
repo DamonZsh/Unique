@@ -84,7 +84,13 @@ router.get("/download/:id",function (req,res) {
             console.log(err);
             res.end("ERROR");
         }
-        res.render("download.html",{poster:rows[0].poster,expiredDay:rows[0].expiredDay,fileName:rows[0].original_file_name});
+
+        if(rows[0].expiredDay < formatDate(new Date())){
+            res.render("fileDeleted",{poster:row[0].poster});
+        }else{
+            res.render("download",{poster:rows[0].poster,expiredDay:rows[0].expiredDay,
+                fileName:rows[0].original_file_name});
+        }
     });
     conn.end();
 });
@@ -97,8 +103,16 @@ router.get("/downloading/:fileName",function (req,res) {
     res.download(filePath);
 });
 
-router.get("/testing",function(req,res){
-    res.render("testing",{poster:"Kevin",expiredDay:"2016-09-30",fileName:"test.txt",size:"30M"});
+
+router.get("/testing/:id",function(req,res){
+    var id = req.params.id;
+    console.log("file path is:" + id);
+    if(id == 1){
+        res.render("testing",{poster:"Kevin",expiredDay:"2016-09-03",fileName:"test.txt",size:"30M"});
+    }else{
+        res.render("fileDeleted",{poster:"Ke"});
+    }
+
 });
 
 module.exports = router;

@@ -8,26 +8,47 @@
     <link rel="stylesheet" href="/stylesheets/dropZone.css">
     <script src="/javaScript/dropZone.js"></script>
     <script src="/javaScript/jquery-3.1.0.min.js"></script>
+    <script src="/javaScript/bootstrap.min.js"></script>
 
     <title>File Download</title>
     <script>
+        $(function(){
+            var height = $(window).height();
+            $("#middle").height(height);
+
+        });
+
     </script>
+    <style>
+        footer{
+            position:absolute;
+            bottom:0;
+            left:49%;
+        }
+        .fontSize{
+            font-size:1em;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
     <div class="row-fluid">
-        <div class="span3"></div>
-        <div class="span6">
-            <div><h2>Welcome To Unique Down Loading Tools </h2></div>
-            <div><p class="label label-default"><%=poster%> has uploaded a file , you can download it through bellow link</p></div>
-            <div><p class="label label-default">The file will be delete at <%=expiredDay%></p></div>
-
-            <table class="table table-bordered table-hover">
+        <div class="span2"></div>
+        <div class="span8" id="middle" style="background: rgb(153, 158, 204);">
+            <div><h2 style="text-align:center;">Welcome To Unique Down Loading Tools </h2></div>
+            <div><span class="label label-info fontSize"><%=poster%> has uploaded file:<%=fileName%> ,
+                it will be deleted at <%=expiredDay%></span></div>
+            <div><span class="label label-info fontSize">You can download it by clicking the file name.</span></div>
+            <table class="table table-bordered table-hover" id="tableId">
                 <thead><tr><th>File Name</th><th>Expired Day</th><th>Poster</th></tr></thead>
-                <tboday><tr><td><a href="/downloading/<%=fileName%>"><%=fileName%></a></td><td><%=expiredDay%></td><td><%=poster%></td></tr></tboday>
+                <tboday><tr><td><a href="/downloading/<%=fileName%>" title="down load"><%=fileName%></a></td><td>
+                    <%=expiredDay%></td><td><%=poster%></td></tr></tboday>
             </table>
+            <footer>
+                <p>&copy;Unique 2016</p>
+            </footer>
         </div>
-        <div class="span3"></div>
+        <div class="span2"></div>
     </div>
 </div>
 </body>
