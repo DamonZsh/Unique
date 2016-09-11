@@ -11,13 +11,13 @@ var pool = mysql.createPool({
 	database : 'nodejs'
 });
 
-var query=function(sql,callback){
+var query=function(sql, param, callback){
     pool.getConnection(function(err,conn){
         if(err){
             callback(err,null,null);
         }else{
-            conn.query(sql,function(qerr,vals,fields){
-                console.info('query start, sql = ' + sql);
+            conn.query(sql,param ,function(qerr,vals,fields){
+                console.info('query start, sql = ' + vals );
                 //release the connection
                 conn.release();
                 console.info('query completed, released connection');

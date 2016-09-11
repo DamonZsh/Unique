@@ -12,10 +12,10 @@
             <th> File Size </th>
             <th> Effective Date </th>
         </tr>
-        <%if (files.length) { %>
-            <% files.forEach(file, function()) {%>
-             <tr><td><%= files.name %></td><td><%= files.size %></td><td><%= files.effectiveDate %></td></tr>
-            <% }%>
+        <%if (files.length>0) { %>
+            <% files.forEach(function(file){ %>
+             <tr><td><%= file.name %></td><td><%= file.size %></td><td><%= file.effectiveDate %></td></tr>
+            <% })%>
         <% }%>
     </table>
     <h4>The email distribution as below</h4>

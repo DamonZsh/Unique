@@ -20,11 +20,20 @@ router.get('/', function (req, res) {
     res.render('index', {title: 'Welcome'});
 });
 
-router.post('/upload',  function (req, res) {
-    console.info( req.file);
-    var new_file_name =  req.file.originalname.substring(req.file.originalname.lastIndexOf("."));
-
+router.post('/uploadFiles',u.single('file'),  function (req, res) {
     var date = new Date();
+    var new_file_name =  req.file.originalname;
+    var new_file_size = req.file.size;
+    var poster = req.body['email0'];
+    var receiver = req.body['email1'];
+    var subject0 = 'You have shared some files';
+    var subject1 = 'You have been shared some files';
+    var duration = req.body['duration0'];
+    var new_file_effective =date;
+    var father_folder = __dirname.replace("routes", "") + "public\\files\\";
+    if(!fs.existsSync(father_folder)){
+        fs.mkdirSync(father_folder).catch();
+    }
     var yearMonth = date.getFullYear().toString() +"-" + date.getMonth().toString();
     var des_folder = __dirname.replace("routes", "") + "public\\files\\" + yearMonth;
 
@@ -38,13 +47,42 @@ router.post('/upload',  function (req, res) {
             if (err) {
                 console.log("err = " + err);
             } else {
-                console.info(data);
-                app.render('../template/receiver.ejs',{name : "damon" , poster: "damon" }, function(err, html){
+                app.render('../template/poster0.ejs',{name : poster, files : [{name : new_file_name , size : new_file_size, effectiveDate : new_file_effective}], emails : receiver }, function(err, html){
                     if(err){
-                        console.info(err);
+                        console.error(err);
                     }else{
-                        console.info(html);
-
+                        dbpool("insert into sharing(POSTER, FILE_LOCATION, FILE_NAME, FILE_DURATION, EXPIRE_DATE, FILE_SIZE)  values(?,?,?,?,?,?)", [poster, des_folder, new_file_name,  duration, new_file_effective, new_file_size], function (err) {
+                            if (err) {
+                                console.error(err);
+                                res.end("ERROR");
+                            }
+                        });
+                        dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT) values(?,?,?,?,?)", [uuid.v1(), poster, receiver, subject0, html], function (err) {
+                            if (err) {
+                                console.log(err);
+                                res.end("ERROR");
+                            }
+                        });
+                        dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT) values(?,?,?,?,?)", [uuid.v1(), poster, poster, subject1, html], function (err) {
+                            if (err) {
+                                console.log(err);
+                                res.end("ERROR");
+                            }
+                        });
+                        res.end("shared file has mailed to audiences.");
+                    }
+                });
+                app.render('../template/receiver.ejs',{name : poster, files : [{name : new_file_name , size : new_file_size, effectiveDate : new_file_effective}], link0: "" }, function(err, html){
+                    if(err){
+                        console.error(err);
+                    }else{
+                        dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT) values(?,?,?,?,?)", [uuid.v1(), poster, receiver, subject1, html], function (err) {
+                            if (err) {
+                                console.error(err);
+                                res.end("ERROR");
+                            }
+                        });
+                        res.end("shared file has mailed to audiences.");
                     }
                 });
                 res.end(new_file_name);
@@ -53,38 +91,14 @@ router.post('/upload',  function (req, res) {
     });
 });
 
-router.post("/save_upload", function (req, res) {
-    var ofn = req.body["original_file_name"];
-    var nfn = req.body["new_file_name"];
-    var poster = req.body["poster"];
-    var mails = req.body["mails"];
-    var save_time = req.body["save_time"];
-    var current = new Date();
-    var expired_date = current.getDate() + save_time;
-    dbpool("insert into sharing values(0,?,?,?,?,?,?,?)", [poster, nfn, ofn, mails, current, expired_date, "1"], function (err) {
-        if (err) {
-            console.log(err);
-            res.end("ERROR");
-        }
-    });
-    res.end("shared file has mailed to audiences.");
-});
 
 router.get("/download/:id",function (req,res) {
     var id = req.params.id;
-    conn = mysql.createConnection(options);
-    conn.connect(function (err) {
-        if (err) {
-            console.error("connect db " + options.host + " error: " + err);
-            process.exit();
-        }
-    });
-    conn.query("select * from sharing where file_original_name = ?", [id], function selectRes(err, rows) {
+    dbpool("select * from sharing where file_original_name = ?", [id], function selectRes(err, rows) {
         if (err) {
             console.log(err);
             res.end("ERROR");
         }
-
         if(rows[0].expiredDay < formatDate(new Date())){
             res.render("fileDeleted",{poster:row[0].poster});
         }else{

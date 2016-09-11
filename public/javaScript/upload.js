@@ -4,18 +4,37 @@
 
 
 
-var post = function () {
-
+function post() {
     var pValue = $('#posterEmail').val();
-    var reg =/^[A-Za-z0-9]+$/;
-    if(!reg.test(pValue)){
+    var reg0 =/^[A-Za-z0-9]+$/;
+    if(isEmpty(pValue) || !reg0.test(pValue)){
         $('#alert').show();
+        return;
     }
-    var rValue = $('#receiverEmails').val();
-    $('#demo-upload').submit();
+    var rValues = $('#receiverEmails').val();
+    var reg1 = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+    var rValue = rValues.split(';');
+    if(isEmpty(rValues)){
+        $('#alert').show();
+        return;
+    }
+    for(var i = 0 ; i < rValue.size; i ++){
+        if(!reg1.test(rValue[i])){
+            $('#alert').show();
+            return;
+        }
+    }
+    if(isEmpty($('#duration').val())){
+        $('#alert').show();
+        return;
+    }
+    $('#confirmModal').modal('show');
 }
 
-var resetForm = function () {
-    console.info("Clear the fomr");
-    $("#infoform").clear;
+var isEmpty = function (param) {
+    return param==null || param == undefined || param.trim() == "";
+}
+
+var hideAlert = function(){
+    $('#alert').hide();
 }
