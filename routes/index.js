@@ -122,7 +122,7 @@ router.get("/testing/:id",function(req,res){
     var id = req.params.id;
     console.log("file path is:" + id);
     if(id == 1){
-        res.render("testing",{poster:"Kevin",expiredDay:"2016-09-03",fileName:"test.txt",size:"30M"});
+        res.render("testing",{poster:"Kevin",expiredDay:"2016-09-30",fileName:"test.txt",size:"30M"});
     }else{
         res.render("fileDeleted",{poster:"Ke"});
     }
