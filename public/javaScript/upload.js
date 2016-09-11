@@ -4,31 +4,31 @@
 
 
 
-function post() {
+var validate = function() {
     var pValue = $('#posterEmail').val();
     var reg0 =/^[A-Za-z0-9]+$/;
     if(isEmpty(pValue) || !reg0.test(pValue)){
-        $('#alert').show();
-        return;
+        $('#alert').alert();
+        return "error";
     }
     var rValues = $('#receiverEmails').val();
     var reg1 = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
     var rValue = rValues.split(';');
     if(isEmpty(rValues)){
-        $('#alert').show();
-        return;
+        $('#alert').alert();
+        return "error";
     }
     for(var i = 0 ; i < rValue.size; i ++){
         if(!reg1.test(rValue[i])){
-            $('#alert').show();
-            return;
+            $('#alert').alert();
+            return "error";
         }
     }
     if(isEmpty($('#duration').val())){
-        $('#alert').show();
-        return;
+        $('#alert').alert();
+        return "error";
     }
-    $('#confirmModal').modal('show');
+    // $('#confirmModal').modal('show');
 }
 
 var isEmpty = function (param) {
@@ -36,5 +36,5 @@ var isEmpty = function (param) {
 }
 
 var hideAlert = function(){
-    $('#alert').hide();
+    $('#alert').alert('close');
 }

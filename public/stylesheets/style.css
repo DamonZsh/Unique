@@ -332,3 +332,16 @@ footer .logo { margin: 2.8rem 0; width: 270px; }
 .for-hire { text-align: center; padding: 1em 2em; background: rgba(255, 255, 255, 0.1); border-radius: 0.3rem; line-height: 1.5em; }
 .for-hire h1 { padding: 0; margin: 1.5rem 0 3rem; }
 .for-hire h1 img { max-width: 100%; height: auto; }
+
+#infoform{
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  background: white;
+  padding: 54px 30px;
+}
+label {
+  color: #0f0f0f;
+  /* font-size: inherit; */
+  font-style: oblique;
+  font-weight: bold;
+}
