@@ -12,11 +12,43 @@
 
     <title>File Download</title>
     <script>
+        var intDiff = parseInt(0);
         $(function(){
             var height = $(window).height();
             $("#middle").height(height);
+            //handle timer
+            try{
+                var ed = new Date($("#expiredDay").val()).getTime();
+                var currentTime = new Date().getTime();
+
+                intDiff = (ed - currentTime)/1000;
+                timer(intDiff);
+            }catch(err){
+
+            }
 
         });
+        function timer(intDiff) {
+            window.setInterval(function () {
+                var day = 0,
+                        hour = 0,
+                        minute = 0,
+                        second = 0;//时间默认值
+                if (intDiff > 0) {
+                    day = Math.floor(intDiff / (60 * 60 * 24));
+                    hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+                    minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+                    second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+                }
+                if (minute <= 9) minute = '0' + minute;
+                if (second <= 9) second = '0' + second;
+                $('#day_show').html(day + " Days");
+                $('#hour_show').html('<s id="h"></s>' + hour + ' Hours');
+                $('#minute_show').html('<s></s>' + minute + ' Minutes');
+                $('#second_show').html('<s></s>' + second + ' Seconds');
+                intDiff--;
+            }, 1000);
+        }
 
     </script>
     <style>
@@ -28,6 +60,7 @@
         .fontSize{
             font-size:1em;
         }
+
     </style>
 </head>
 <body>
@@ -39,14 +72,23 @@
             <div><span class="label label-info fontSize"><%=poster%> has uploaded file:<%=fileName%> ,
                 it will be deleted at <%=expiredDay%></span></div>
             <div><span class="label label-info fontSize">You can download it by clicking the file name.</span></div>
+
+            <div class="time-item" style="float:right; text-align:right;">
+                <strong id="day_show">0 Days</strong>
+                <strong id="hour_show">0 Hours</strong>
+                <strong id="minute_show">0 Minutes</strong>
+                <strong id="second_show">0 Seconds</strong>
+            </div>
+
             <table class="table table-bordered table-hover" id="tableId">
                 <thead><tr><th>File Name</th><th>Expired Day</th><th>Poster</th></tr></thead>
-                <tboday><tr><td><a href="/downloading/<%=fileName%>" title="down load"><%=fileName%></a></td><td>
-                    <%=expiredDay%></td><td><%=poster%></td></tr></tboday>
+                <tbody><tr><td><a href="/downloading/<%=fileName%>" title="down load"><%=fileName%></a></td><td>
+                    <%=expiredDay%></td><td><%=poster%></td></tr></tbody>
             </table>
             <footer>
                 <p>&copy;Unique 2016</p>
             </footer>
+            <div><input id="expiredDay" value=<%=expiredDay%> hidden/></div>
         </div>
         <div class="span2"></div>
     </div>
