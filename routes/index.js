@@ -42,6 +42,7 @@ router.post('/uploadFiles',u.single('file'),  function (req, res) {
         fs.mkdirSync(des_folder).catch();
     }
     var des_file = des_folder + "\\" + new_file_name;
+
     fs.readFile(req.file.buffer, function (err, data) {
         fs.writeFile(des_file, data, function (err) {
             if (err) {
@@ -72,7 +73,7 @@ router.post('/uploadFiles',u.single('file'),  function (req, res) {
                         res.end("shared file has mailed to audiences.");
                     }
                 });
-                app.render('../template/receiver.ejs',{name : poster, files : [{name : new_file_name , size : new_file_size, effectiveDate : new_file_effective}], link0: "" }, function(err, html){
+                app.render('../template/receiver.ejs',{name : poster, files : [{name : new_file_name , size : new_file_size, effectiveDate : new_file_effective}], link0: "/downloading/" + new_file_name }, function(err, html){
                     if(err){
                         console.error(err);
                     }else{
@@ -106,14 +107,26 @@ router.get("/download/:id",function (req,res) {
                 fileName:rows[0].original_file_name});
         }
     });
-    conn.end();
 });
 
 router.get("/downloading/:fileName",function (req,res) {
     var fileName = req.params.fileName;
-    console.log("file name is" + fileName);
-    var filePath = __dirname.replace("routes", "") + "public/files/" + fileName;
-    console.log("file path is:" + filePath);
+
+    var file_location = "";
+    dbpool("select * from sharing where file_original_name = ?", [fileName], function selectRes(err, rows) {
+        if (err) {
+            console.log(err);
+            res.end("ERROR");
+        }
+        file_location= rows[0].file_location ;
+    });
+    var filePath = file_location +"\\"+ fileName;
+    // dbpool("insert into file_download(ID, down_loader, file, update_time, download_times) values(?,?,?,?,?)", [uuid.v1(), "ip", fileName, new Date(), 1], function (err) {
+    //     if (err) {
+    //         console.error(err);
+    //         res.end("ERROR");
+    //     }
+    // });
     res.download(filePath);
 });
 

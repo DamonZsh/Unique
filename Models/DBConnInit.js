@@ -33,6 +33,18 @@ conn.query("CREATE TABLE sharing (idsharing INT(11) AUTO_INCREMENT, poster varch
 
 conn.query("CREATE TABLE mail_to (sharing_id INT(11) NULL DEFAULT NULL,user_id INT(11) NULL DEFAULT NULL) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
 
+//file down load monitor table
+/*
+* file_down{
+* id int,
+* down_loader varchar,
+* file varchar,
+* download_times int,
+* update_time datetime
+* }
+* */
+conn.query("CREATE TABLE file_download (id INT(11) NULL DEFAULT NULL,down_loader varchar(45) NULL DEFAULT NULL,file varchar(100) NULL DEFAULT NULL,update_time DATETIME NULL DEFAULT NULL,download_times int Null Default null) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
+
 conn.end(function (err) {
    if (err){
        console.log(err);
