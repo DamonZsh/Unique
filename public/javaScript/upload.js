@@ -3,6 +3,39 @@
  */
 
 
+Dropzone.options.demoUpload = {
+    url : "/uploadFiles",
+    paramName: "file", // The name that will be used to transfer the file
+    maxFilesize: 10000, // MB
+    uploadMultiple: false,
+    autoProcessQueue: false,
+    parallelUploads: 100,
+    addRemoveLinks: true,
+    dictRemoveLinks: "x",
+    dictCancelUpload: "x",
+    accept: function (file, done) {
+        if (file.name == "justinbieber.jpg") {
+            done("Naha, you don't.");
+        } else {
+            done();
+        }
+    },
+    init: function () {
+        var submitButton = document.querySelector("#submit-all")
+        demoUpload = this; // closure
+        submitButton.addEventListener("click", function() {
+            $('#email0').val($('#posterEmail').val());
+            $('#email1').val($('#receiverEmails').val());
+            $('#duration0').val($('#duration').val());
+            demoUpload.processQueue(); // Tell Dropzone to process all queued files.
+        });
+        this.on("success", function (file, done) {
+        });
+        this.on("addedfile", function(){
+            $('#submit-all').removeAttr('disabled');
+        });
+    }
+};
 
 var validate = function() {
     var pValue = $('#posterEmail').val();

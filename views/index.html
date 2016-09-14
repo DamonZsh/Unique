@@ -11,47 +11,15 @@
     <script src="/javaScript/dropzone.js"></script>
     <script src="/javaScript/fastClick.js"></script>
     <script src="/javaScript/upload.js"></script>
-    <script style="text/javascript">
-        Dropzone.options.demoUpload = {
-            url : "/uploadFiles",
-            paramName: "file", // The name that will be used to transfer the file
-            maxFilesize: 10000, // MB
-            uploadMultiple: false,
-            autoProcessQueue: false,
-            parallelUploads: 100,
-            addRemoveLinks: true,
-            dictRemoveLinks: "x",
-            dictCancelUpload: "x",
-            accept: function (file, done) {
-                if (file.name == "justinbieber.jpg") {
-                    done("Naha, you don't.");
-                } else {
-                    done();
-                }
-            },
-            init: function () {
-                var submitButton = document.querySelector("#submit-all")
-                demoUpload = this; // closure
-                submitButton.addEventListener("click", function() {
-                    $('#email0').val($('#posterEmail').val());
-                    $('#email1').val($('#receiverEmails').val());
-                    $('#duration0').val($('#duration').val());
-//                    var validation = validate();
-//                    if(validation = 'error')
-//                        return;
-                    demoUpload.processQueue(); // Tell Dropzone to process all queued files.
-                });
-                this.on("success", function (file, done) {
-                });
-                this.on("addedfile", function(){
-                    $('#submit-all').removeAttr('disabled');
-                });
-            }
-        };
+    <script>
+        $('document').ready(function () {
+            var date = new Date();
+            var nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
+            $('#duration').attr('min', date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate());
+            $('#duration').attr('max', nextDate.getFullYear()+'/'+(nextDate.getMonth()+1)+'/'+nextDate.getDate());
+        });
     </script>
     <title>File Courier</title>
-
-
 </head>
 
 <body>
@@ -94,11 +62,10 @@
                         </div>
                         <div class="form-group">
                             <label for="duration">
-                                Duration :
+                                Effective Date :
                             </label>
                             <div  style="width:40%" class="input-group">
-                                <input type="number" class="form-control" id="duration" max="7" min="1"  name="duration">
-                                <span class="input-group-addon"  style="width:30% ; text-align:left">DAYS</span>
+                                <input type="date" class="form-control"  name="duration" id="duration">
                             </div>
                         </div>
                         <div class="form-group">
