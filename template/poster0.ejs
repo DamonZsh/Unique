@@ -12,9 +12,9 @@
             <th> File Size </th>
             <th> Effective Date </th>
         </tr>
-        <%if (files.length>0) { %>
+        <%if (files.length) { %>
             <% files.forEach(function(file){ %>
-             <tr><td><%= file.name %></td><td><%= file.size %></td><td><%= file.effectiveDate %></td></tr>
+             <tr><td><%= file.name %></td><td><%= file.size %></td><td><%= effectiveDate %></td></tr>
             <% })%>
         <% }%>
     </table>
@@ -22,5 +22,6 @@
     <table>
         <tr><th>email distribution</th><td><%=emails %></td></tr>
     </table>
+    <h4>Please <a href="<%= confirmation%>">click here</a> to confirmation</h4>
 </body>
 </html>

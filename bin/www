@@ -7,7 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('untitled:server');
 var http = require('http');
-var schduleJob = require('../routes/scheduleJob.js');
+var emailschduleJob = require('../routes/emailCheckScheduleJob.js');
+var fileschduleJob = require('../routes/deleteFileScheduleJob.js');
 
 /**
  * Get port from environment and store in Express.
@@ -22,7 +23,8 @@ app.set('port', port);
 
 var server = http.createServer(app).listen(app.get('port'), function() {
                  console.log('Express server listening on port ' + app.get('port'));
-                 schduleJob.j;
+                 emailschduleJob.j;
+                 fileschduleJob.j;
              });
 
 /**

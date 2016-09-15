@@ -17,7 +17,7 @@ var query=function(sql, param, callback){
             callback(err,null,null);
         }else{
             conn.query(sql,param ,function(qerr,vals,fields){
-                console.info('query start, sql = ' + vals );
+                console.info('query start, sql = ' + sql  + "  val = " + vals);
                 //release the connection
                 conn.release();
                 console.info('query completed, released connection');
