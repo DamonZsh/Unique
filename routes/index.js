@@ -30,6 +30,9 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     var date = new Date();
     var posterIp = getClientIp(req);
     var files = req.files;
+    var host = req.hostname;
+    var port = '3000';
+    var server = host+':'+port;
     files.forEach(function(file){
         if(filename==undefined){
             filename =  file.originalname + "*";
@@ -93,7 +96,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         filejson.push(_file);
     }
 
-    app.render('../template/poster0.ejs',{name : poster, files : filejson, effectiveDate : new_file_effective, emails : receiver , confirmation :"/confirmation/" + crypto.aesEncrypt(confirmationId)}, function(err, html){
+    app.render('../template/poster0.ejs',{name : poster, files : filejson, effectiveDate : new_file_effective, emails : receiver , confirmation :server + "/confirmation/" + crypto.aesEncrypt(confirmationId)}, function(err, html){
         if(err){
             console.error(err);
         }else{
@@ -106,7 +109,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
                     console.info('data inserted into SHARING');
                 }
             });
-            dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT) values(?,?,?,?,?)", [uuid.v1(), poster, poster, subject0, html], function (err) {
+            dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT, SHARING_ID, ISCONFIRMED) values(?,?,?,?,?,?,?)", [uuid.v1(), poster, poster, subject0, html, confirmationId,'1'], function (err) {
                 if (err) {
                     console.log(err);
                     res.end("ERROR");
@@ -123,12 +126,12 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         var email = _receiver[i];
         var encr =crypto.aesEncrypt(confirmationId+""+ email.replace('@',''));
         if(email!=null && email!=undefined){
-            app.render('../template/receiver.ejs',{name : poster, files : [{name : new_file_name , size : new_file_size, effectiveDate : new_file_effective}], link0: "/download/" + encr}, function(err, html){
+            app.render('../template/receiver.ejs',{name : poster, files : filejson, effectiveDate : new_file_effective, link0:server + "/download/" + encr}, function(err, html){
                 if(err){
                     console.error(err);
                 }else{
                     console.info(html);
-                    dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT) values(?,?,?,?,?)", [uuid.v1(), poster, email, subject1, html], function (err) {
+                    dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT, SHARING_ID) values(?,?,?,?,?,?)", [uuid.v1(), poster, email, subject1, html, confirmationId], function (err) {
                         if (err) {
                             console.error(err);
                             res.end("ERROR");
@@ -158,6 +161,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
 router.get('/confirmation/:id', function (req,res) {
    var encrypt = req.params.id;
     var id = crypto.aesDecrypt(encrypt);
+    console.info(id);
     dbpool("select * from sharing where CONFIRMATION_ID = ? and isConfirmed = '0'", [id], function (err, rows) {
         if (err) {
             console.log(err);
@@ -175,6 +179,12 @@ router.get('/confirmation/:id', function (req,res) {
                     res.end("ERROR");
                 }else{
                     res.render("confirmation",{name: rows['poster'], status: '0'});
+                }
+            });
+            dbpool("update mail_to set isConfirmed ='1' where SHARING_ID = ? and ISCONFIRMED = '0'",[id], function (err, rows) {
+                if(err){
+                    console.log(err);
+                    res.end("ERROR");
                 }
             })
         }

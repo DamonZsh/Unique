@@ -17,7 +17,7 @@ rule.minute = times;
 
 var j = schedule.scheduleJob(rule, function(){
     //every min to get the 100 unsent email to send. if send success, then set the stauts=1, if fail, sendcount++,
-    dbpool("select ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT from mail_to where EMAIL_SENDCOUNT<10 and EMAIL_STATUS='0' and EMAIL_RECEIVER='filecourier@163.com' order by EMAIL_SENDCOUNT limit 100;",
+    dbpool("select ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT from mail_to where EMAIL_SENDCOUNT<10 and EMAIL_STATUS='0' and ISCONFIRMED='1' and EMAIL_RECEIVER='damon_zsh@163.com' order by EMAIL_SENDCOUNT limit 100;",
                 function(err, vals){
         if(err){
             console.error(err);
@@ -31,7 +31,7 @@ var j = schedule.scheduleJob(rule, function(){
                     from : mailServerAddress,
                     to: vals[i]['EMAIL_RECEIVER'],
                     subject : vals[i]['EMAIL_SUBJECT'],
-                    html : '<p>thi s testing for </p>'
+                    html : vals[i]['EMAIL_CONTENT']
                 };
 
                 emailSender(option, function(emailSenderError){
