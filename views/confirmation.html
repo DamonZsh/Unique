@@ -2,11 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Confirmation</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/stylesheets/dropZone.css">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/javaScript/jquery-3.1.0.min.js"></script>
+    <script src="/javaScript/bootstrap.min.js"></script>
+    <script src="/javaScript/dropzone.js"></script>
+    <script src="/javaScript/fastClick.js"></script>
+    <script src="/javaScript/upload.js"></script>
+    <script>
+        $('document').ready(function () {
+            var date = new Date();
+            var nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
+            $('#duration').attr('min', date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate());
+            $('#duration').attr('max', nextDate.getFullYear()+'/'+(nextDate.getMonth()+1)+'/'+nextDate.getDate());
+        });
+    </script>
+    <title>File Courier</title>
 </head>
+
 <body>
-<h4>Hello! <%= name%> , Thanks for your confirmation, your files will be shared right now.</h4>
 
+<div class="container-fluid">
 
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8" style="border: 1px;background-color:  rgba(66, 244, 230, 1)">
+            <div class="row">
+                <div class="col-md-1">
+                </div>
+                <div class="col-md-10">
+                    <% if (status=='0'){ %>
+                        <h4>Hello! <%= name%> , Thanks for your confirmation, your files will be shared right now.</h4>
+                    <% }else{ %>
+                        <h4>Hello!  Here are no records.</h4>
+                    <% } %>
+                </div>
+                <div class="col-md-1">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="confirmModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Information
+                </h4>
+            </div>
+            <div class="modal-body">
+                The receivers will get the email notification to get the url link to download the files.
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" id="letspost" >
+                    Confirmed
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+</div>
 </body>
+
 </html>

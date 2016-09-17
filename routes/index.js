@@ -11,21 +11,24 @@ var uuid = require("node-uuid");
 var mysql = require('mysql');
 var ejs = require("ejs");
 var dbpool = require('../Models/DBPool.js');
-
+var formatDate = require('../Models/comm.js');
+var crypto = require('../Models/crypto.js');
+var exec = require('child_process').exec();
 var router = express.Router();
 var app = express();
-/* GET home page. */
+
+    /* GET home page. */
 router.get('/', function (req, res) {
     res.render('index', {title: 'Welcome'});
 });
-var filename ;
-var filesize ;
+
 
 router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
+    var filename ;
+    var filesize ;
     var u1 = uuid.v1();
     var date = new Date();
-   var posterIp = null;
-
+    var posterIp = getClientIp(req);
     var files = req.files;
     files.forEach(function(file){
         if(filename==undefined){
@@ -42,6 +45,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     });
     var new_file_name = filename.substring(0, filename.length-2);
     var new_file_size = filesize.substring(0, filename.length-2);
+    var confirmationId = uuid.v1();
     var poster = req.body['email0'];
     var receiver = req.body['email1'];
     var subject0 = 'You have shared some files';
@@ -61,7 +65,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     if(!fs.existsSync(subfolder)){
         fs.mkdirSync(subfolder);
     }
-    var des_file = subfolder + "\\" + new_file_name;
+
     files.forEach(function(file){
         var f = subfolder + "\\" + file.originalname;
         fs.readFile(file.path, function (err, data) {
@@ -89,12 +93,12 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         filejson.push(_file);
     }
 
-    app.render('../template/poster0.ejs',{name : poster, files : filejson, effectiveDate : new_file_effective, emails : receiver , confirmation :"/confirmation/" + subfolder}, function(err, html){
+    app.render('../template/poster0.ejs',{name : poster, files : filejson, effectiveDate : new_file_effective, emails : receiver , confirmation :"/confirmation/" + crypto.aesEncrypt(confirmationId)}, function(err, html){
         if(err){
             console.error(err);
         }else{
             console.info(html);
-            dbpool("insert into sharing(ID, POSTER, FILE_LOCATION, FILE_NAME, EXPIRE_DATE, FILE_SIZE, POSTER_IP)  values(?,?,?,?,?,?,?)", [uuid.v1(), poster, subfolder, new_file_name,  new_file_effective, new_file_size, posterIp], function (err) {
+            dbpool("insert into sharing(ID, POSTER, FILE_LOCATION, FILE_NAME, EXPIRE_DATE, FILE_SIZE, POSTER_IP, CONFIRMATION_ID)  values(?,?,?,?,?,?,?, ?)", [uuid.v1(), poster, subfolder, new_file_name,  new_file_effective, new_file_size, posterIp, confirmationId], function (err) {
                 if (err) {
                     console.error(err);
                     res.end("ERROR");
@@ -113,38 +117,64 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
             });
         }
     });
-    app.render('../template/receiver.ejs',{name : poster, files : [{name : new_file_name , size : new_file_size, effectiveDate : new_file_effective}], link0: "/downloading/" + subfolder }, function(err, html){
-        if(err){
-            console.error(err);
-        }else{
-            dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT) values(?,?,?,?,?)", [uuid.v1(), poster, receiver, subject1, html], function (err) {
-                if (err) {
+
+    var _receiver = receiver.split(';');
+    for(var i=0; i<_receiver.length;i++){
+        var email = _receiver[i];
+        var encr =crypto.aesEncrypt(confirmationId+""+ email.replace('@',''));
+        if(email!=null && email!=undefined){
+            app.render('../template/receiver.ejs',{name : poster, files : [{name : new_file_name , size : new_file_size, effectiveDate : new_file_effective}], link0: "/download/" + encr}, function(err, html){
+                if(err){
                     console.error(err);
-                    res.end("ERROR");
-                } else{
-                    console.info('data inserted into MAIL_TO');
+                }else{
+                    console.info(html);
+                    dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT) values(?,?,?,?,?)", [uuid.v1(), poster, email, subject1, html], function (err) {
+                        if (err) {
+                            console.error(err);
+                            res.end("ERROR");
+                        } else{
+                            console.info('data inserted into MAIL_TO');
+                        }
+                    });
                 }
             });
         }
-    });
+    };
+
+    //zip the file
+    var cmd = 'zip -r ' + subfolder +'.zip ./*'
+    //var cmd = 'makecab ' + subfolder + ' ' + subfolder +'.zip';
+    exec(cmd, function (err, stdout, stderr) {
+        if(err){  console.log('zip file error:'+stderr);}
+        else{
+            var data = JSON.parse(stdout);
+            console.log(data);
+        }
+
+    })
+
 });
 
 router.get('/confirmation/:id', function (req,res) {
-   var id = req.params.id;
-    dbpool("select * from sharing where file_original_name = ? and isConfirmed = '0'", [id], function selectRes(err, rows) {
+   var encrypt = req.params.id;
+    var id = crypto.aesDecrypt(encrypt);
+    dbpool("select * from sharing where CONFIRMATION_ID = ? and isConfirmed = '0'", [id], function (err, rows) {
         if (err) {
             console.log(err);
             res.end("ERROR");
         }
-        if(rows[0].expiredDay < formatDate(new Date())){
-            res.render("fileDeleted",{poster:rows[0].poster});
+        console.info(rows.length);
+        if(rows.length==0){
+            res.render("confirmation",{status: '1'});
+        }else if(rows['expire_Day'] < formatDate(new Date())){
+            res.render("fileDeleted",{poster:rows['poster']});
         }else{
-            dbpool("update sharing set isConfirmed ='1' where file_original_name = ? and isConfirmed = '0'",[id], function (err, rows) {
+            dbpool("update sharing set isConfirmed ='1' where CONFIRMATION_ID = ? and isConfirmed = '0'",[id], function (err, rows) {
                 if(err){
                     console.log(err);
                     res.end("ERROR");
                 }else{
-                    res.render("confirmation",{name: rows[0].poster});
+                    res.render("confirmation",{name: rows['poster'], status: '0'});
                 }
             })
         }
@@ -152,34 +182,48 @@ router.get('/confirmation/:id', function (req,res) {
 });
 
 router.get("/download/:id",function (req,res) {
-    var id = req.params.id;
-    dbpool("select * from sharing where file_original_name = ?", [id], function selectRes(err, rows) {
+    var encrypt = req.params.id;
+    var id = crypto.aesDecrypt(encrypt);
+    var id2 = id.substring(0, 36);
+
+    dbpool("select * from sharing where CONFIRMATION_ID = ? and isConfirmed = '1'", [id2], function(err, rows) {
         if (err) {
             console.log(err);
             res.end("ERROR");
         }
-        if(rows[0].expiredDay < formatDate(new Date())){
-            res.render("fileDeleted",{poster:row[0].poster});
+        if(rows[0]['expire_Day'] < formatDate(new Date())){
+            res.render("fileDeleted",{poster:rows[0]['poster']});
         }else{
-            res.render("download",{poster:rows[0].poster,expiredDay:rows[0].expiredDay,
-                fileName:rows[0].original_file_name});
+            var filejson =[];
+            var FILE_NAME = rows[0]['FILE_NAME'];
+            var FILE_SIZE = rows[0]['FILE_SIZE'];
+            var _filesname = FILE_NAME.split('*');
+            var _filessize = FILE_SIZE.split('*');
+            for(var i =0 ; i< _filesname.length;i++){
+                var _file = {name: _filesname[i] , size : _filessize[i]};
+                filejson.push(_file);
+            }
+            var effectiveDate = rows[0]['EXPIRE_DATE'];
+            var poster = rows[0]['POSTER'];
+            console.info(poster);
+            res.render("download",{poster:poster,expiredDay:effectiveDate,files:filejson, link : '/downloading/' + encrypt + '.zip'});
         }
     });
 });
 
 router.get("/downloading/:fileName",function (req,res) {
     var fileName = req.params.fileName;
-
+    var confirmationId = fileName.substring(0, fileName.indexOf('.'));
     var file_location = "";
-    dbpool("select * from sharing where file_original_name = ?", [fileName], function selectRes(err, rows) {
+    dbpool("select * from sharing where confirmation_id = ?", [confirmationId], function selectRes(err, rows) {
         if (err) {
             console.log(err);
             res.end("ERROR");
         }
-        file_location= rows[0].file_location ;
+        file_location= rows[0]['FILE_LOCATION'];
     });
-    var filePath = file_location +"\\"+ fileName;
-    res.download(filePath);
+    //var filePath = file_location +"\\"+ fileName;
+    res.download(file_location);
 });
 
 
@@ -193,16 +237,11 @@ router.get("/testing/:id",function(req,res){
     }
 
 });
-var getClientIp = function () {
-    var ipAddress;
-    var forwardedIpStr = this.headers('x-forwarded-for');
-    if(forwardedIpStr){
-        var forwardedIps = forwardedIpStr.split(',');
-        ipAddress = forwardedIps[0];
-    }else{
-        ipAddress = req.connection.remoteAddress;
-    }
-    return ipAddress;
+var getClientIp = function (req) {
+    return (req.headers['x-forwarded-for'] ||
+    req.connection.remoteAddress ||
+    req.socket.remoteAddress ||
+    req.connection.socket.remoteAddress);
 }
 
 module.exports = router;
