@@ -158,16 +158,14 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
 
 });
 
-router.get('/confirmation/:id', function (req,res) {
-   var encrypt = req.params.id;
+router.post('/confirmation', function (req,res) {
+   var encrypt = req.body['id'];
     var id = crypto.aesDecrypt(encrypt);
-    console.info(id);
     dbpool("select * from sharing where CONFIRMATION_ID = ? and isConfirmed = '0'", [id], function (err, rows) {
         if (err) {
             console.log(err);
             res.end("ERROR");
         }
-        console.info(rows.length);
         if(rows.length==0){
             res.render("confirmation",{status: '1'});
         }else if(rows['expire_Day'] < formatDate(new Date())){
@@ -189,6 +187,7 @@ router.get('/confirmation/:id', function (req,res) {
             })
         }
     });
+    res.end();
 });
 
 router.get("/download/:id",function (req,res) {

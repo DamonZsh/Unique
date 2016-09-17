@@ -12,11 +12,29 @@
     <script src="/javaScript/fastClick.js"></script>
     <script src="/javaScript/upload.js"></script>
     <script>
+        function GetRequest() {
+            var url = location.search; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("/upload/") != -1) {
+                theRequest = url.substring(url.indexOf("/upload/")+8, url.length );
+            }
+            return theRequest;
+        }
+        function confirm() {
+            $.ajax({
+                url:'/confirmation',
+                data:{id: $('#id')},
+                type:json,
+            }).success(function () {
+                $('#confirmModal').modal('show');
+            }).error(function () {
+                console.info('error happens');
+            })
+        }
         $('document').ready(function () {
-            var date = new Date();
-            var nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
-            $('#duration').attr('min', date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate());
-            $('#duration').attr('max', nextDate.getFullYear()+'/'+(nextDate.getMonth()+1)+'/'+nextDate.getDate());
+            console.info("document is ready")
+            var para = GetRequest();
+            $('#id').val(para);
         });
     </script>
     <title>File Courier</title>
@@ -35,10 +53,14 @@
                 </div>
                 <div class="col-md-10">
                     <% if (status=='0'){ %>
-                        <h4>Hello! <%= name%> , Thanks for your confirmation, your files will be shared right now.</h4>
+                        <h4>Hello! <%= name%> , Thanks for your confirmation, Please click below button to confirm.</h4>
                     <% }else{ %>
                         <h4>Hello!  Here are no records.</h4>
                     <% } %>
+                   <form>
+                       <input type="text" hidden id="id" name="id">
+                       <input type="button"  name="confirm" onclick="confirm()">
+                   </form>
                 </div>
                 <div class="col-md-1">
                 </div>
@@ -58,20 +80,18 @@
                     ×
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    Information
+                    Confirmation
                 </h4>
             </div>
             <div class="modal-body">
-                The receivers will get the email notification to get the url link to download the files.
+               Thanks for your confirmation ! The receivers will get the email notification to get the url link to download the files.
             </div>
             <div class="modal-footer">
 
                 <button type="button" class="btn btn-default" data-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-primary" id="letspost" >
-                    Confirmed
-                </button>
+
             </div>
         </div>
 
