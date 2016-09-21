@@ -7,8 +7,9 @@
 var app = require('../app');
 var debug = require('debug')('untitled:server');
 var http = require('http');
-var emailschduleJob = require('../routes/emailCheckScheduleJob.js');
-var fileschduleJob = require('../routes/deleteFileScheduleJob.js');
+var emailschduleJob = require('../scheduleJob/emailCheckScheduleJob.js');
+var expireFileJob = require('../scheduleJob/checkExpireFileJob.js');
+var fileschduleJob = require('../scheduleJob/deleteFileScheduleJob.js');
 
 /**
  * Get port from environment and store in Express.
