@@ -125,7 +125,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     var _receiver = receiver.split(';');
     for(var i=0; i<_receiver.length;i++){
         var email = _receiver[i];
-        var encr =crypto.aesEncrypt(confirmationId+""+ email.replace('@',''));
+        var encr =crypto.aesEncrypt(confirmationId+""+ email);
         if(email!=null && email!=undefined){
             app.render('../template/receiver.ejs',{name : poster, files : filejson, effectiveDate : new_file_effective, link0:server + "/download/" + encr}, function(err, html){
                 if(err){
@@ -226,17 +226,34 @@ router.get("/downloading/:fileName",function (req,res) {
     var fileName = req.params.fileName;
     var confirmationId = fileName.substring(0, fileName.indexOf('.'));
     var file_location = "";
+    var ip = getClientIp(req);
+    var url = req.url;
+    var theRequest = null;
+    var email = null;
+    if (url.indexOf("/upload/") != -1) {
+        theRequest = url.substring(url.indexOf("/download/") + 10, url.length );
+        email = crypto.aesDecrypt(theRequest).substring(36, id.length);
+    }
     dbpool("select * from sharing where confirmation_id = ?", [confirmationId], function selectRes(err, rows) {
         if (err) {
-            logger.log(err);
+            logger.error(err);
             res.end("ERROR");
         }else {
+            if(rows.length>0){
+                file_location= rows[0]['FILE_LOCATION'];
+                res.download(file_location);
+                dbpool("INSERT INTO FILE_DOWNLOAD(ID, DOWNLOADER, fileId, update_time, download_times, downloadIp)VALUES(?,?,?,?,?,?)",[uuid.v1(), email, rows[0]['ID'], new Date(), '1', ip], function (err, rows) {
+                    if(err){
+                        logger.error(err);
+                    }
+                })
+            }
 
         }
-        file_location= rows[0]['FILE_LOCATION'];
+
     });
     //var filePath = file_location +"\\"+ fileName;
-    res.download(file_location);
+
 });
 
 
