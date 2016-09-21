@@ -112,7 +112,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
             });
             dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT, SHARING_ID, ISCONFIRMED) values(?,?,?,?,?,?,?)", [uuid.v1(), poster, poster, subject0, html, confirmationId,'1'], function (err) {
                 if (err) {
-                    logger.log(err);
+                    logger.error(err);
                     res.end("ERROR");
                 } else{
                     logger.info('data inserted into MAIL_TO');
@@ -241,7 +241,7 @@ router.get("/downloading/:fileName",function (req,res) {
         }else {
             if(rows.length>0){
                 file_location= rows[0]['FILE_LOCATION'];
-                res.download(file_location);
+                res.download(file_location+'.zip');
                 dbpool("INSERT INTO FILE_DOWNLOAD(ID, DOWNLOADER, fileId, update_time, download_times, downloadIp)VALUES(?,?,?,?,?,?)",[uuid.v1(), email, rows[0]['ID'], new Date(), '1', ip], function (err, rows) {
                     if(err){
                         logger.error(err);
