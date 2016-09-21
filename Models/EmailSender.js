@@ -5,6 +5,7 @@
 var enodemailer  = require('nodemailer');
 var mailServerAddress = "filecourier@163.com";
 var password = "123456zsh";
+var logger = require('../log.js').logger;
 
 var smtpConfig = {
     host: 'smtp.163.com',
@@ -23,7 +24,7 @@ var emailSender = function (options, callback) {
         if(err){
            callback(err.toString());
         }else
-            console.log('Message sent: ' + info.response);
+            logger.log('Message sent: ' + info.response);
     })
 }
 

@@ -24,7 +24,7 @@
             $.ajax({
                 url:'/confirmation',
                 data:{id: $('#id')},
-                type:json,
+                type:'json',
             }).success(function () {
                 $('#confirmModal').modal('show');
             }).error(function () {
@@ -50,6 +50,7 @@
         <div class="col-md-8" style="border: 1px;background-color:  rgba(66, 244, 230, 1)">
             <div class="row">
                 <div class="col-md-1">
+                    <div><h3 style="text-align:center;"><strong>Welcome To Unique Down Loading Tools </strong></h3></div>
                 </div>
                 <div class="col-md-10">
                     <% if (status=='0'){ %>

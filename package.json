@@ -20,6 +20,7 @@
     "multer" : "~1.2.0",
     "node-uuid" : "~1.4.7",
     "node-schedule" : "~1.1.1",
-    "nodemailer" : "~2.6"
+    "nodemailer" : "~2.6",
+    "log4js": "*"
   }
 }
