@@ -47,7 +47,7 @@ conn.query("CREATE TABLE MAIL_TO (ID VARCHAR(30) NOT NULL ,EMAIL_POSTER VARCHAR(
 * update_time datetime
 * }
 * */
-conn.query("CREATE TABLE FILE_DOWNLOAD (id INT(11) NULL DEFAULT NULL,down_loader varchar(45) NULL ,file varchar(100) NULL,update_time DATETIME,download_times int Null) ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
+conn.query("CREATE TABLE FILE_DOWNLOAD (ID VARCHAR(30) NULL DEFAULT NULL,DOWNLOADER varchar(45) NULL ,fileId varchar(50) NULL,update_time DATETIME,download_times int Null, downloadIp varchar(30) NULL)  ENGINE = InnoDB DEFAULT CHARACTER SET = utf8");
 
 conn.end(function (err) {
    if (err){

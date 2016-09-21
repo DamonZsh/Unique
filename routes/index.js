@@ -230,6 +230,8 @@ router.get("/downloading/:fileName",function (req,res) {
         if (err) {
             logger.log(err);
             res.end("ERROR");
+        }else {
+
         }
         file_location= rows[0]['FILE_LOCATION'];
     });
