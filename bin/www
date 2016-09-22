@@ -7,9 +7,10 @@
 var app = require('../app');
 var debug = require('debug')('untitled:server');
 var http = require('http');
-var emailschduleJob = require('../scheduleJob/emailCheckScheduleJob.js');
-var expireFileJob = require('../scheduleJob/checkExpireFileJob.js');
-var fileschduleJob = require('../scheduleJob/deleteFileScheduleJob.js');
+
+var emailschduleJob = require('../job/emailCheckScheduleJob.js');
+var fileschduleJob = require('../job/deleteFileScheduleJob.js');
+/**var expiredFileJob = require('../job/checkExpiredFileJob.js');*/
 
 /**
  * Get port from environment and store in Express.
@@ -25,6 +26,7 @@ app.set('port', port);
 var server = http.createServer(app).listen(app.get('port'), function() {
                  console.log('Express server listening on port ' + app.get('port'));
                  emailschduleJob.j;
+
                  fileschduleJob.j;
              });
 
