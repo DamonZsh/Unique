@@ -132,7 +132,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
                     logger.error(err);
                 }else{
                     logger.info(html);
-                    dbpool("insert into mail_to(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT, SHARING_ID) values(?,?,?,?,?,?)", [uuid.v1(), poster, email, subject1, html, confirmationId], function (err) {
+                    dbpool("INSERT INTO MAIL_TO(ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT, SHARING_ID) VALUES(?,?,?,?,?,?)", [uuid.v1(), poster, email, subject1, html, confirmationId], function (err) {
                         if (err) {
                             logger.error(err);
                             res.end("ERROR");
@@ -159,8 +159,44 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     })
 
 });
+router.get('/confirmation/:id', function (req,res) {
+    var id = crypto.aesDecrypt(req.params.id);
+    dbpool("SELECT * FROM SHARING WHERE CONFIRMATION_ID = ? AND ISCONFIRMED = '0' AND STATUS='0'", [id], function (err, row) {
+        if (err) {
+            logger.error(err);
+            res.end("ERROR");
+        }else{
+            if(row.length>0){
+                var filejson =[];
+                var _filesname =  row[0]['FILE_NAME'].split('*');
+                var _filessize = row[0]['FILE_SIZE'].split('*');
+                for(var i =0 ; i< _filesname.length;i++){
+                    var _file = {name: _filesname[i] , size : _filessize[i]};
+                    filejson.push(_file);
+                }
+                var effectiveDate = row[0]['EXPIRE_DATE'];
+                var poster = row[0]['POSTER'];
+                res.render("confirmation",{status : 0, name:poster,expiredDay:effectiveDate,files:filejson}, function (err) {
+                    if(err){
+                        logger.error(err);
+                        res.end("ERROR");
+                    }
+                });
+            }else{
+                res.render("confirmation",{status : 1, name:null,expiredDay:null,files:null}, function (err) {
+                    if(err){
+                        logger.error(err);
+                        res.end("ERROR");
+                    }
+                });
+            }
 
-router.post('/confirmation', function (req,res) {
+        }
+
+    });
+
+});
+router.post('/yesPleaseShare', function (req,res) {
    var encrypt = req.body['id'];
     var id = crypto.aesDecrypt(encrypt);
     dbpool("select * from sharing where CONFIRMATION_ID = ? and isConfirmed = '0'", [id], function (err, rows) {
@@ -257,16 +293,6 @@ router.get("/downloading/:fileName",function (req,res) {
 });
 
 
-router.get("/testing/:id",function(req,res){
-    var id = req.params.id;
-    logger.log("file path is:" + id);
-    if(id == 1){
-        res.render("testing",{poster:"Kevin",expiredDay:"2016-09-30",fileName:"test.txt",size:"30M"});
-    }else{
-        res.render("fileDeleted",{poster:"Ke"});
-    }
-
-});
 var getClientIp = function (req) {
     return (req.headers['x-forwarded-for'] ||
     req.connection.remoteAddress ||

@@ -22,7 +22,7 @@
         }
         function confirm() {
             $.ajax({
-                url:'/confirmation',
+                url:'/yesPleaseShare',
                 data:{id: $('#id')},
                 type:'json',
             }).success(function () {
@@ -58,10 +58,20 @@
                     <% }else{ %>
                         <h4>Hello!  Here are no records.</h4>
                     <% } %>
-                   <form>
+                   <div>
+                       <table class="table table-bordered table-hover table-condensed table-striped" id="tableId">
+                           <thead><tr><th>File Name</th><th>File Size</th><th>Poster</th><th>Expired Day</th></tr></thead>
+                           <tbody>
+                           <%if (files.length) { %>
+                           <% files.forEach(function(file){ %>
+                           <tr><td><%= file.name %></td><td><%= file.size %></td><td><%= name %><td><%= expiredDay %></td></tr>
+                           <% })%>
+                           <% }%>
+                           </tbody>
+                       </table>
                        <input type="text" hidden id="id" name="id">
                        <input type="button"  name="confirm" onclick="confirm()">
-                   </form>
+                   </div>
                 </div>
                 <div class="col-md-1">
                 </div>
