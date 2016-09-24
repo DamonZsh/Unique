@@ -67,7 +67,3 @@ var validate = function() {
 var isEmpty = function (param) {
     return param==null || param == undefined || param.trim() == "";
 }
-
-var hideAlert = function(){
-    $('#alert').alert('close');
-}

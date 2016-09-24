@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>File Courier!</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+	  <link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-3">
+		</div>
+		<div class="col-md-6">
+			<h3 class="text-center">
+				Welcome to use FileCourier
+			</h3>
+			<div class="alert alert-success alert-dismissable">
+				<h4>
+					Hello, <%=name %>!
+				</h4> <strong>Warning!</strong> You are sharing below files, Please make sure these files are not classified.
+			</div>
+			<fieldset>
+			<legend>File Information:</legend>
+			<table class="table table-striped table-bordered table-hover table-condensed">
+				<thead><tr style="background-color: rgb(51, 122, 183)"><th>#</th><th>File Name</th><th>File Size</th><th>Expiration Day</th></tr></thead>
+				<tbody>
+				<%if (files.length) { %>
+				<% files.forEach(function(file, index){ %>
+				<tr><td><%= index+1 %></td><td><%= file.name %></td><td><%= file.size %></td><td><%= expiredDay %></td></tr>
+				<% })%>
+				<% }%>
+				</tbody>
+			</table>
+			</fieldset>
+			<fieldset>
+			<legend>Receiver Email Distributions:</legend>
+			<table class="table table-striped table-bordered table-hover table-condensed">
+				<thead>
+				<tr style="background-color: rgb(51, 122, 183)">
+					<th>
+						Email Distribution:
+					</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+					<td><%= email %></td>
+				</tr>
+				</tbody>
+			</table>
+			</fieldset>
+			<div class="checkbox">
+				<label>
+					<input id="checkbox"type="checkbox" onclick="onchecked()"> I confirm there are no classified files.
+				</label>
+			</div>
+			<button type="button" class="btn btn-primary" disabled id="button" onclick="confirm()">
+				Let it go !
+			</button>
+
+			<button type="button" class="btn btn-danger">
+				Remove them !
+			</button>
+
+			<div class="modal fade in" id="modal-container-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								×
+							</button>
+							<h4 class="modal-title" id="myModalLabel">
+								Info
+							</h4>
+						</div>
+						<div class="modal-body">
+							Thanks for your confirmation, your files will be shared in a few minutes.
+						</div>
+						<div class="modal-footer">
+							 
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="modal fade in" id="modal-container-2" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+								×
+							</button>
+							<h4 class="modal-title" id="myModalLabel2">
+								Error
+							</h4>
+						</div>
+						<div class="modal-body">
+							Error happens, please try later.
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">
+								Close
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="col-md-3">
+		</div>
+		<footer>
+			<p>&copy;Unique 2016</p>
+		</footer>
+	</div>
+</div>
+	<script src="/javaScript/jquery.min.js"></script>
+	<script src="/javaScript/bootstrap.min.js"></script>
+	<script>
+	function GetRequest() {
+			var url = location.pathname; //获取url中"?"符后的字串
+			var theRequest = new Object();
+			if (url.indexOf("/confirmation/") != -1) {
+				theRequest = url.substring(url.indexOf("/confirmation/")+ 14, url.length );
+			}
+			return theRequest;
+	}
+	function onchecked(){
+		if($('#checkbox').is(':checked')){
+			$('#button').removeAttr('disabled');
+		}else{
+			$('#button').attr('disabled','disabled');
+		}
+	}
+	  function confirm() {
+		  $.ajax({
+			  url:'/yesHereYouGo',
+			  data:{id: GetRequest()},
+			  type:'post',
+			  success: function (data, textStatus) {
+				  $('#modal-container-2').modal('hide');
+				  $('#modal-container-1').modal('show');
+			  },
+			  error: function (XMLHttpRequest, textStatus, errorThrown) {
+				  $('#modal-container-1').modal('hide');
+				  $('#modal-container-2').modal('show');
+			  }
+		  })
+	  }
+  </script>
+  </body>
+</html>

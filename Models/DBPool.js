@@ -17,9 +17,11 @@ var query=function(sql, param, callback){
             callback(err,null,null);
         }else{
             conn.query(sql,param ,function(qerr,vals,fields){
+                if(qerr){
+                    console.error(qerr);
+                }
                 //release the connection
                 conn.release();
-                console.info('query completed, released connection');
                 //callback
                 callback(qerr,vals,fields);
             });

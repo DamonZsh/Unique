@@ -1,128 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>File Courier!</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/stylesheets/dropZone.css">
     <link rel="stylesheet" href="/stylesheets/style.css">
-    <script src="/javaScript/jquery-3.1.0.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/bootstrap-datetimepicker.min.css">
+    <script src="/javaScript/jquery.min.js"></script>
     <script src="/javaScript/bootstrap.min.js"></script>
-    <script src="/javaScript/dropzone.js"></script>
-    <script src="/javaScript/fastClick.js"></script>
-    <script src="/javaScript/upload.js"></script>
-    <script>
-        $('document').ready(function () {
-            var date = new Date();
-            var nextDate = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 7);
-            $('#duration').attr('min', date.getFullYear()+'/'+(date.getMonth()+1)+'/'+date.getDate());
-            $('#duration').attr('max', nextDate.getFullYear()+'/'+(nextDate.getMonth()+1)+'/'+nextDate.getDate());
-        });
-    </script>
-    <style>
-        footer{
-            position:absolute;
-            bottom:0;
-            left:49%;
-        }
-        .fontSize{
-            font-size:1em;
-        }
-
-    </style>
-    <title>File Courier</title>
+    <script src="/javaScript/bootstrap-datetimepicker.min.js"></script>
 </head>
 
 <body>
-
 <div class="container-fluid">
-
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
         </div>
-        <div class="col-md-8" style="border: 1px;background-color:  rgba(66, 244, 230, 1)">
-            <div class="row">
-                <div class="col-md-1">
-                </div>
-                <div class="col-md-10">
-                    <div class="alert alert-success alert-dismissable" hidden id="alert">
-
-                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                            ×
-                        </button>
-                        <h4>
-                            Alert!
-                        </h4> <strong>Warning!</strong> Best check your infomations, they're not looking too good.
-                    </div>
-
-
-                    <div role="form" id="infoform">
-
-                        <div  class="form-group"><h6 style="text-align:center;"><strong>Welcome To Unique Down Loading Tools </strong></h6></div>
-                        <div class="form-group">
-                            <label for="posterEmail">
-                                Your Email :
-                            </label>
-                            <div  style="width:40%" class="input-group">
-                                <input type="" class="form-control" id="posterEmail" name="posterEmail">
-                                <span class="input-group-addon" style="text-align:left"><strong>@SC.COM</strong></span>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="duration">
-                                Effective Date :
-                            </label>
-                            <div  style="width:40%" class="input-group">
-                                <input type="date" class="form-control"  name="duration" id="duration">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="receiverEmails">
-                                Receiver Emails :
-                            </label>
-                            <input type="text" class="form-control" id="receiverEmails"   name="receiverEmails" style="margin-bottom: 10px;">
-                            <input type="button" style="width: 15%" class="btn btn-primary" id="checkname"   name="checkname" value="check name">
-                        </div>
-
-                        <div class="form-group">
-
-                            <label for="demo-upload">
-                                Drag files here :
-                            </label>
-
-                            <form class="dropzone needsclick" id="demo-upload" enctype="multipart/form-data">
-                                <input hidden id = "email0" name="email0">
-                                <input hidden id = "email1" name="email1">
-                                <input hidden id = "duration0" name="duration0">
-                                <div class="dz-message needsclick">
-                                    Drop files here or click to upload.<br />
-                                    <span class="note needsclick">( Selected files will be uploaded after click <strong>POST</strong> .)</span>
-                                </div>
-
-                            </form>
-                            <div>
-                                <button type="button" id="submit-all" class="btn btn-primary" data-toggle="modal" disabled >
-                                    POST
-                                </button>
-
-                                <button type="button" class="btn btn-cancel" onclick="">
-                                    Reset
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="col-md-1">
-                </div>
-
+        <div class="col-md-6">
+            <h3 class="text-center">
+                Welcome to use FileCourier
+            </h3>
+            <div class="alert alert-success alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert">×</button>
+                <h4>
+                    Tips!
+                </h4> <strong>WARNING!</strong> Please <strong>DO NOT</strong> share any classified files by this tool.
             </div>
+            <fieldset>
+            <div role="form">
+                <div class="form-group">
+                    <legend>
+                     <label for="posterEmail">
+                        Your Email :
+                    </label>
+                    </legend>
+                    <div  style="width:40%" class="input-group">
+                        <input type="text" class="form-control" id="posterEmail" name="posterEmail">
+                        <span class="input-group-addon" style="text-align:left"><strong>@SC.COM</strong></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <legend>
+                    <label for="duration">
+                        Expiration Date :
+                    </label>
+                        </legend>
+                    <div  style="width:40%" class="input-group form_date" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
+                        <input class="form-control"  type="date" value="" size="16"  name="duration" id="duration" >
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                        <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 
+                    </div>
+                </div>
+                <div class="form-group">
+                    <legend>
+                    <label for="receiverEmails">
+                        Receiver Emails :
+                    </label>
+                        </legend>
+                    <div  style="width:100%" class="input-group">
+                    <input type="text" style="width: 83%;margin-right: 2%;"  class="form-control" id="receiverEmails"   name="receiverEmails">
+                    <input type="button" style="width: 15%; " class="btn btn-primary" id="checkname" value="check name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <legend>
+                    <label for="demo-upload">
+                        Drag files here :
+                    </label>
+                        </legend>
+                    <form class="dropzone needsclick" id="demo-upload" enctype="multipart/form-data">
+                        <input hidden id = "email0" name="email0">
+                        <input hidden id = "email1" name="email1">
+                        <input hidden id = "duration0" name="duration0">
+                        <div class="dz-message needsclick">
+                            Drop files here or click to upload.<br />
+                            <span class="note needsclick">( Selected files will be uploaded after click <strong>POST</strong> .)</span>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+            </fieldset>
+            <button type="button" id="submit-all" class="btn btn-primary" disabled >
+                POST
+            </button>
+            <footer>
+                <p>&copy;Unique 2016</p>
+            </footer>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
         </div>
+
     </div>
+
 </div>
 
 <div class="modal fade" id="confirmModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -154,6 +130,11 @@
     </div>
 
 </div>
+
+<script src="/javaScript/dropzone.js"></script>
+<script src="/javaScript/fastClick.js"></script>
+<script src="/javaScript/upload.js"></script>
+
 </body>
 
 </html>

@@ -5,12 +5,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
-    <link rel="stylesheet" href="/stylesheets/dropZone.css">
-    <script src="/javaScript/dropZone.js"></script>
-    <script src="/javaScript/jquery-3.1.0.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <script src="/javaScript/jquery.min.js"></script>
     <script src="/javaScript/bootstrap.min.js"></script>
 
-    <title>File Download</title>
+    <title>File Courier!</title>
     <script>
         var intDiff = parseInt(0);
         $(function(){
@@ -20,7 +19,7 @@
             try{
                 var ed = new Date($("#expiredDay").val()).getTime();
                 var currentTime = new Date().getTime();
-
+                var currentTime = new Date().getTime();
                 intDiff = (ed - currentTime)/1000;
                 timer(intDiff);
             }catch(err){
@@ -49,63 +48,115 @@
                 intDiff--;
             }, 1000);
         }
-
     </script>
-    <style>
-        footer{
-            position:absolute;
-            bottom:0;
-            left:49%;
-        }
-        .fontSize{
-            font-size:1em;
-        }
-
-    </style>
 </head>
 <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>File Courier!</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+</head>
+<body>
+
 <div class="container-fluid">
     <div class="row">
-    <div class="col-md-3">
-    </div>
-    <div class="row-fluid">
-        <div class="span2"></div>
-        <div class="col-md-6" style="border: 1px;" id="middle" >
-            <div class="row">
-            <div><h3 style="text-align:center;"><strong>Welcome To Unique Down Loading Tools </strong></h3></div>
-            <div><span class="label  fontSize" style="color:black"><%=poster%> has uploaded files:,
-                it will be deleted at <%=expiredDay%></span></div>
-            <div><span class="label  fontSize" style="color:black">You can download it by clicking the DOWNLOAD.</span></div>
-
-            <div class="time-item" style="float:right; text-align:right;">
-                <strong id="day_show">0 Days</strong>
-                <strong id="hour_show">0 Hours</strong>
-                <strong id="minute_show">0 Minutes</strong>
-                <strong id="second_show">0 Seconds</strong>
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-center">
+                Welcome to use FileCourier
+            </h3>
+            <div class="alert alert-success alert-dismissable">
+                <h4>
+                    Hello, <%=name %>!
+                </h4> <strong>Warning!</strong> <%=poster %> shared some files with you, you can download them now. Please DONT give the link to anyone you dont trust.
             </div>
+            <fieldset>
+                <legend>File Information:</legend>
+                <div class="time-item" style="float:right; text-align:right;">
+                    <strong id="day_show">0 Days</strong>
+                    <strong id="hour_show">0 Hours</strong>
+                    <strong id="minute_show">0 Minutes</strong>
+                    <strong id="second_show">0 Seconds</strong>
+                </div>
+                <table class="table table-bordered table-hover table-condensed table-striped" id="tableId">
+                    <thead><tr style="background-color: rgb(51, 122, 183)"><th>#</th><th>File Name</th><th>File Size</th><th>Expiration Day</th></tr></thead>
+                    <tbody>
+                    <%if (files.length) { %>
+                    <% files.forEach(function(file, index){ %>
+                    <tr><td><%= index+1 %></td><td><%= file.name %></td><td><%= file.size %></td><td><%= expiredDay %></td></tr>
+                    <% })%>
+                    <% }%>
+                    </tbody>
+                </table>
+            </fieldset>
 
-            <table class="table table-bordered table-hover table-condensed table-striped" id="tableId">
-                <thead><tr><th>File Name</th><th>File Size</th><th>Poster</th><th>Expired Day</th></tr></thead>
-                <tbody>
-                <%if (files.length) { %>
-                <% files.forEach(function(file){ %>
-                <tr><td><%= file.name %></td><td><%= file.size %></td><td><%= poster %><td><%= expiredDay %></td></tr>
-                <% })%>
-                <% }%>
-                </tbody>
-            </table>
-            <a  href="<%= link%>" class="btn btn-primary">Download</a>
+
+            <button type="button" class="btn btn-primary" id="button" onclick="download()">
+                I need them !
+            </button>
             <footer>
                 <p>&copy;Unique 2016</p>
             </footer>
-            <div><input id="expiredDay" value=<%=expiredDay%> hidden/></div>
+            <!--<div><input id="expiredDay" value=<%=expiredDay%> hidden/></div>-->
+            <div class="modal fade in" id="modal-container-2" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel2">
+                                Error
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            Error happens, please try later.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="span2"></div>
-        </div>
-    </div>
         <div class="col-md-3">
         </div>
-        </div>
+    </div>
 </div>
+<script src="/javaScript/jquery.min.js"></script>
+<script src="/javaScript/bootstrap.min.js"></script>
+<script>
+    function GetRequest() {
+        var url = location.pathname;
+        var theRequest = new Object();
+        if (url.indexOf("/download/") != -1) {
+            theRequest = url.substring(url.indexOf("/download/")+ 10, url.length );
+        }
+        return theRequest;
+    }
+    function download() {
+        $.ajax({
+            url:'/downloading/'+ GetRequest(),
+            type:'get',
+            success: function () {
+
+            },
+            error: function () {
+
+            }
+        })
+    }
+</script>
+</body>
+</html>
 </body>
 </html>
