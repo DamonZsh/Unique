@@ -25,6 +25,7 @@ router.get('/', function (req, res) {
 
 
 router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
+
     var filename;
     var filesize;
     var u1 = uuid.v1();
@@ -47,21 +48,21 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     var receiver = req.body['email1'];
     var subject0 = 'You have shared some files';
     var subject1 = 'You have been shared some files';
-
     var new_file_effective = req.body['duration0'];
     var encriptPath = u1 + "" + poster;
-    var father_folder = __dirname.replace("routes", "") + "public\\files\\";
+    var rootFolder = __dirname.replace("routes", "");
+    var father_folder =  "public\\files\\";
     var yearMonth = date.getFullYear().toString() +"-" + (date.getMonth()+1).toString();
-    var des_folder = __dirname.replace("routes", "") + "public\\files\\" + yearMonth + "\\";
+    var des_folder =  father_folder + yearMonth + "\\";
     var subfolder = des_folder  + encriptPath;
-    if(!fs.existsSync(father_folder)){
-        fs.mkdirSync(father_folder);
+    if(!fs.existsSync(rootFolder + father_folder)){
+        fs.mkdirSync(rootFolder + father_folder);
     }
-    if(!fs.existsSync(des_folder)){
-        fs.mkdirSync(des_folder);
+    if(!fs.existsSync(rootFolder + des_folder)){
+        fs.mkdirSync(rootFolder + des_folder);
     };
-    if(!fs.existsSync(subfolder)){
-        fs.mkdirSync(subfolder);
+    if(!fs.existsSync(rootFolder + subfolder)){
+        fs.mkdirSync(rootFolder + subfolder);
     }
     files.forEach(function(file){
         var f = subfolder + "\\" + file.originalname;
@@ -82,7 +83,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         } );
     });
     var _filesname = new_file_name.split('*');
-    console.info(_filesname);
+
     var _filessize = new_file_size.split('*');
     var filejson =[];
     for(var i =0 ; i< _filesname.length;i++){
@@ -185,7 +186,6 @@ router.get('/confirmation/:id', function (req, res) {
 });
 router.post('/yesHereYouGo', function (req,res) {
     var id = crypto.aesDecrypt(req.body['id']);
-    console.info(id);
    dbpool("SELECT * FROM SHARING WHERE CONFIRMATION_ID = ? AND ISCONFIRMED = '0'", [id], function (err, rows) {
         if (err) {
             logger.log(err);
@@ -250,28 +250,20 @@ router.get("/downloading/:id",function (req,res) {
     var username = id.substring(36, id.length).substring(0, id.substring(36, id.length).indexOf('@'));
     var file_location = "";
     var ip = getClientIp(req);
-    var url = req.url;
-    var theRequest = null;
-    var email = null;
-
-    if (url.indexOf("/upload/") != -1) {
-        theRequest = url.substring(url.indexOf("/download/") + 10, url.length );
-        email = crypto.aesDecrypt(theRequest).substring(36, id.length);
-    }
     dbpool("SELECT * FROM SHARING WHERE CONFIRMATION_ID = ?", [confirmationId], function selectRes(err, rows) {
         if (err) {
             logger.error(err);
             res.end("ERROR");
         }else {
             if(rows.length>0){
-                file_location= rows[0]['FILE_LOCATION'];
-                console.info('file_location='+file_location);
-                res.download('D:\\Code\\github\\Unique\\public\\files\\2016-9\\c82597f0-826a-11e6-9d1e-af61d74fffc331.zip','c82597f0-826a-11e6-9d1e-af61d74fffc331.zip', function(err){
+                file_path= rows[0]['FILE_LOCATION'];
+                var rootFolder = __dirname.replace("routes", "");
+                res.download(rootFolder + file_path+ '.zip', file_path+ '.zip', function(err){
                     if(err){
                         logger.error(err);
                     }
                 });
-                dbpool("INSERT INTO FILE_DOWNLOAD(ID, DOWNLOADER, FILEID, UPDATE_TIME, DOWNLOAD_TIMES, DOWNLOADIP)VALUES(?,?,?,?,?,?)",[uuid.v1(), email, rows[0]['ID'], new Date(), '1', ip], function (err, rows) {
+                dbpool("INSERT INTO FILE_DOWNLOAD(ID, DOWNLOADER, FILEID, UPDATE_TIME, DOWNLOAD_TIMES, DOWNLOADIP)VALUES(?,?,?,?,?,?)",[uuid.v1(), username, rows[0]['ID'], new Date(), '1', ip], function (err, rows) {
                     if(err){
                         logger.error(err);
                     }

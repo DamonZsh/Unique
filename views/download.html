@@ -144,16 +144,7 @@
         return theRequest;
     }
     function download() {
-        $.ajax({
-            url:'/downloading/'+ GetRequest(),
-            type:'get',
-            success: function () {
-
-            },
-            error: function () {
-
-            }
-        })
+        window.open('/downloading/'+ GetRequest());
     }
 </script>
 </body>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Courier</title>
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+    <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
+
+    <script>
+        function GetRequest() {
+            var url = location.pathname; //获取url中"?"符后的字串
+            var theRequest = new Object();
+            if (url.indexOf("/confirmation/") != -1) {
+                theRequest = url.substring(url.indexOf("/upload/")+ 8, url.length );
+            }
+            return theRequest;
+        }
+        function confirm() {
+//            $.ajax({
+//                url:'/yesPleaseShare',
+//                data:{id: $('#id')},
+//                type:'json',
+//            }).success(function () {
+//                $('#modal-container-523445').modal('show');
+//                $('#modal-container-523446').modal('hide');
+//            }).error(function () {
+//                $('#modal-container-523445').modal('hide');
+//                $('#modal-container-523446').modal('show');
+//            })
+        }
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-center">
+                Welcome to use FileCourier
+            </h3>
+            <div class="alert">
+                <h4>
+                    Info!
+                </h4> <strong>Warning!</strong> Please make sure these files are not classified.
+            </div>
+            <table class="table">
+                <thead><tr><th>#</th><th>fileName</th><th>file Size</th><th>Expired Day</th></tr></thead>
+                <tbody>
+                <%if (files.length) { %>
+                <% files.forEach(function(file, index){ %>
+                <tr><td>index</td><td><%= file.name %></td><td><%= file.size %></td><%= expiredDay %></td></tr>
+                <% })%>
+                <% }%>
+                </tbody>
+            </table>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>
+                        Email Distribution:
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><%= email %><td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary btn-block" id="modal-523445" onclick="confirm()">Yes, Please share</button>
+
+            <div class="modal fade in" id="modal-container-523445" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                SUCCESS
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            Thank you for your confirmation, your files will be shared in a few minutes.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade in" id="modal-container-523446" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                ×
+                            </button>
+                            <h4 class="modal-title">
+                                ERROR
+                            </h4>
+                        </div>
+                        <div class="modal-body">
+                            Some errors happen, please try later.
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+        </div>
+    </div>
+</div>
+<script src="/javaScript/jquery.min.js"></script>
+<script src="/javaScript/bootstrap.min.js"></script>
+</body>
+<script>
+    $('document').ready(function () {
+        var para = GetRequest();
+        console.info(para);
+        $('#id').val(para);
+    });
+</script>
+
+</html>
