@@ -351,7 +351,7 @@ router.get("/downloading/:fileName", function (req, res) {
         }
 
     });
-    mongo.query_sharing_with_confirmation_id({"CONFIRMATION_ID", confirmationId}, function (err, rows) {
+    mongo.query_sharing_with_confirmation_id({"CONFIRMATION_ID": confirmationId}, function (err, rows) {
         if (err) {
             logger.error(err);
             res.end("ERROR");
