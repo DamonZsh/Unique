@@ -49,9 +49,9 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     var new_file_effective = req.body['duration0'];
     var encriptPath = u1 + "" + poster;
     var rootFolder = __dirname.replace("routes", "");
-    var father_folder =  "public\\files\\";
+    var father_folder =  "public/files/";
     var yearMonth = date.getFullYear().toString() +"-" + (date.getMonth()+1).toString();
-    var des_folder =  father_folder + yearMonth + "\\";
+    var des_folder =  father_folder + yearMonth + "/";
     var subfolder = des_folder  + encriptPath;
     if(!fs.existsSync(rootFolder + father_folder)){
         fs.mkdirSync(rootFolder + father_folder);
@@ -63,7 +63,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         fs.mkdirSync(rootFolder + subfolder);
     }
     files.forEach(function(file){
-        var f = rootFolder + subfolder + "\\" + file.originalname;
+        var f = rootFolder + subfolder + "/" + file.originalname;
         fs.readFile(file.path, function (err, data) {
             if(err){
                 logger.error('upload err :' + err)

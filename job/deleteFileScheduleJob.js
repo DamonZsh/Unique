@@ -17,7 +17,7 @@ rule.hour = 0;
 rule.minute = 0;
 
 var j = schedule.scheduleJob(rule, function(){
-    logger.info('');
+    // logger.info('');
    });
 
 

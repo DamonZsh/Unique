@@ -62,14 +62,13 @@ var j = schedule.scheduleJob(rule, function(){
 
     //the below job is to delete the expired file
 
-    logger.log('schedule to update expired sharing:' + new Date());
-
-    dbpool("update sharing set status = 0 where expire_date < current_time() and status = 1", function (err, result) {
-        if (err) {
-            logger.error(err);
-        }
-        logger.log("updated rows is "+ result.affectedRows);
-    });
+    // logger.log('schedule to update expired sharing:' + new Date());
+    //
+    // dbpool("update sharing set status = 0 where expire_date < current_time() and status = 1", function (err, result) {
+    //     if (err) {
+    //         logger.error(err);
+    //     }
+    // });
 
 });
 

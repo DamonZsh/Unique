@@ -19,7 +19,6 @@ var j = schedule.scheduleJob(rule, function(){
         if (err) {
             logger.error(err);
         }
-        logger.log("updated rows is "+ result.affectedRows);
     });
 
 });
