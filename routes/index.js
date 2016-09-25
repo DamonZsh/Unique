@@ -136,7 +136,7 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     };
 
     //zip the file
-    var cmd = 'zip -r ' + rootFolder + subfolder +'.zip ./*'
+    var cmd = 'zip -r ' + rootFolder + subfolder +' ./*'
     //var cmd = 'makecab ' + subfolder + ' ' + subfolder +'.zip';
     fs.exec(cmd, function (err, stdout, stderr) {
         if(err){ logger.error('zip file error:'+stderr);}
