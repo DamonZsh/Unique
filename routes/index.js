@@ -25,7 +25,6 @@ router.get('/', function (req, res) {
 
 
 router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
-
     var filename;
     var filesize;
     var u1 = uuid.v1();
@@ -43,7 +42,6 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     });
     var new_file_name = filename.substring(0, filename.length-2);
     var new_file_size = filesize.substring(0, filename.length-2);
-
     var poster = req.body['email0'];
     var receiver = req.body['email1'];
     var subject0 = 'You have shared some files';
@@ -65,10 +63,10 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         fs.mkdirSync(rootFolder + subfolder);
     }
     files.forEach(function(file){
-        var f = subfolder + "\\" + file.originalname;
+        var f = rootFolder + subfolder + "\\" + file.originalname;
         fs.readFile(file.path, function (err, data) {
             if(err){
-                logger.info('upload err :' + err)
+                logger.error('upload err :' + err)
             }else{
                 fs.writeFile(f, data, function (err) {
                     if(err){
@@ -83,14 +81,12 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         } );
     });
     var _filesname = new_file_name.split('*');
-
     var _filessize = new_file_size.split('*');
     var filejson =[];
     for(var i =0 ; i< _filesname.length;i++){
         var _file = {name: _filesname[i] , size : _filessize[i]};
         filejson.push(_file);
     }
-
     app.render('../template/poster0.ejs',{name : poster, files : filejson, expiredDay : new_file_effective, emails : receiver , confirmation :server + "/confirmation/" + crypto.aesEncrypt(confirmationId)}, function(err, html){
         if(err){
             logger.error(err);
@@ -140,10 +136,10 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
     };
 
     //zip the file
-    var cmd = 'zip -r ' + subfolder +'.zip ./*'
+    var cmd = 'zip -r ' + rootFolder + subfolder +'.zip ./*'
     //var cmd = 'makecab ' + subfolder + ' ' + subfolder +'.zip';
     fs.exec(cmd, function (err, stdout, stderr) {
-        if(err){ logger.log('zip file error:'+stderr);}
+        if(err){ logger.error('zip file error:'+stderr);}
         else{
             var data = JSON.parse(stdout);
             logger.log(data);

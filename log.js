@@ -12,10 +12,10 @@ log4js.configure({
         }, //控制台输出
         {
             type: "file",
-            filename: 'logs/logs.log',
-            pattern: "_yyyy-MM-dd",
+            filename: 'logs/logInfo',
+            pattern: "yyyy-MM-dd.log",
             maxLogSize: 20480,
-            backups: 3,
+            backups: 30,
             category: 'dateFileLog'
 
         }//日期文件格式
@@ -34,5 +34,5 @@ exports.logger = dateFileLog;
 
 
 exports.use = function(app) {
-    app.use(log4js.connectLogger(consoleLog, {level:'INFO', format:':method :url'}));
+    app.use(log4js.connectLogger(dateFileLog, {level:'INFO', format:':method :url'}));
 }
