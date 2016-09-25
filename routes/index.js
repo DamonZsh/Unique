@@ -213,7 +213,7 @@ router.get("/download/:id",function (req,res) {
             logger.log(err);
             res.end("ERROR");
         }
-        if(rows[0]['EXPIRE_DATE'] < formatDate(new Date())){
+        if(formatDate(rows[0]['EXPIRE_DATE']) < formatDate(new Date())){
             res.render("fileDeleted",{poster:rows[0]['poster']});
         }else{
             var filejson =[];
@@ -249,11 +249,7 @@ router.get("/downloading/:id/:fileName",function (req,res) {
                 file_path= rows[0]['FILE_LOCATION'];
                 var rootFolder = __dirname.replace("routes", "");
                 console.info(rootFolder + file_path+ '/'+ req.params.fileName);
-                res.download(rootFolder + file_path+ '/'+ req.params.fileName, req.params.fileName, function(err){
-                    if(err){
-                        logger.error(err);
-                    }
-                });
+                res.download(rootFolder + file_path+ '/'+ req.params.fileName, req.params.fileName);
                 dbpool("INSERT INTO FILE_DOWNLOAD(ID, DOWNLOADER, FILEID, UPDATE_TIME, DOWNLOAD_TIMES, DOWNLOADIP)VALUES(?,?,?,?,?,?)",[uuid.v1(), username, rows[0]['ID'], new Date(), '1', ip], function (err, rows) {
                     if(err){
                         logger.error(err);
