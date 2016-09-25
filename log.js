@@ -22,15 +22,15 @@ log4js.configure({
     ],
     replaceConsole: true,   //替换console.logs
     levels:{
-        dateFileLog: 'debug',
-        console: 'info'
+        dateFileLog: 'info',
+        console: 'debug'
     }
 });
 
 
 var dateFileLog = log4js.getLogger('dateFileLog');
 var consoleLog = log4js.getLogger('console');
-exports.logger = consoleLog;
+exports.logger = dateFileLog;
 
 
 exports.use = function(app) {

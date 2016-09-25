@@ -15,7 +15,7 @@ rule.minute = 0;
 var j = schedule.scheduleJob(rule, function(){
     //the below job is to delete the expired file
     logger.log('schedule to update expired sharing:' + new Date());
-    dbpool("update sharing set status = 1 where expire_date < current_time() and status = 0", function (err, result) {
+    dbpool("UPDATE SHARING SET STATUS = 1 WHERE EXPIRE_DATE < CURRENT_TIME() AND STATUS = 0", function (err, result) {
         if (err) {
             logger.error(err);
         }

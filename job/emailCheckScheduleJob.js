@@ -18,7 +18,7 @@ rule.minute = times;
 
 var j = schedule.scheduleJob(rule, function(){
     //every min to get the 100 unsent email to send. if send success, then set the stauts=1, if fail, sendcount++,
-    dbpool("select ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT from mail_to where EMAIL_SENDCOUNT<10 and EMAIL_STATUS='0' and ISCONFIRMED='1' and EMAIL_RECEIVER='damon_zsh@163.com' order by EMAIL_SENDCOUNT limit 100;",
+    dbpool("SELECT ID, EMAIL_POSTER, EMAIL_RECEIVER, EMAIL_SUBJECT, EMAIL_CONTENT FROM MAIL_TO WHERE EMAIL_SENDCOUNT<10 AND EMAIL_STATUS='0' AND ISCONFIRMED='1' ORDER BY EMAIL_SENDCOUNT LIMIT 30;",
         function(err, vals){
             if(err){
                 logger.error(err);
@@ -39,7 +39,7 @@ var j = schedule.scheduleJob(rule, function(){
                         if(emailSenderError){
                             // logger.info(vals[i]['ID']);
                             logger.error('send email error : ' + emailSenderError);
-                            dbpool("update mail_to set EMAIL_SENDCOUNT=EMAIL_SENDCOUNT+1  where id='" + ID + "';", function(updateCountError,updatedValues){
+                            dbpool("UPDATE MAIL_TO SET EMAIL_SENDCOUNT=EMAIL_SENDCOUNT+1  WHERE ID='" + ID + "';", function(updateCountError,updatedValues){
                                 if(updateCountError){
                                     logger.error('update sendcount error : ' + updateCountError);
                                 }else{
@@ -47,7 +47,7 @@ var j = schedule.scheduleJob(rule, function(){
                                 }
                             });
                         }else{
-                            dbpool("update mail_to set EMAIL_STATUS='0'  where id='" + ID +"';",function(updateStatusError,updatedValues){
+                            dbpool("UPDATE MAIL_TO SET EMAIL_STATUS='0'  WHERE ID='" + ID +"';",function(updateStatusError,updatedValues){
                                 if(err){
                                     logger.error('update status error : ' + updateStatusError);
                                 }else {
