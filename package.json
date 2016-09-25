@@ -21,6 +21,8 @@
     "node-uuid" : "~1.4.7",
     "node-schedule" : "~1.1.1",
     "nodemailer" : "~2.6",
-    "log4js": "*"
+    "log4js": "*",
+    "mongodb": "*"
+
   }
 }
