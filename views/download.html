@@ -9,7 +9,7 @@
     <script src="/javaScript/jquery.min.js"></script>
     <script src="/javaScript/bootstrap.min.js"></script>
 
-    <title>File Courier!</title>
+    <title>AHA! File Courier!</title>
     <script>
         var intDiff = parseInt(0);
         $(function(){
@@ -57,7 +57,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>File Courier!</title>
+    <title>A HA! File Courier!</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
 </head>
@@ -69,7 +69,7 @@
         </div>
         <div class="col-md-6">
             <h3 class="text-center">
-                Welcome to use FileCourier
+                A HA! File Courier!
             </h3>
             <div class="alert alert-success alert-dismissable">
                 <h4>
@@ -78,18 +78,18 @@
             </div>
             <fieldset>
                 <legend>File Information:</legend>
-                <div class="time-item" style="float:right; text-align:right;">
-                    <strong id="day_show">0 Days</strong>
-                    <strong id="hour_show">0 Hours</strong>
-                    <strong id="minute_show">0 Minutes</strong>
-                    <strong id="second_show">0 Seconds</strong>
-                </div>
+                <!--<div class="time-item" style="float:right; text-align:right;">-->
+                    <!--<strong id="day_show">0 Days</strong>-->
+                    <!--<strong id="hour_show">0 Hours</strong>-->
+                    <!--<strong id="minute_show">0 Minutes</strong>-->
+                    <!--<strong id="second_show">0 Seconds</strong>-->
+                <!--</div>-->
                 <table class="table table-bordered table-hover table-condensed table-striped" id="tableId">
-                    <thead><tr style="background-color: rgb(51, 122, 183)"><th>#</th><th>File Name</th><th>File Size</th><th>Expiration Day</th></tr></thead>
+                    <thead><tr style="background-color: rgb(51, 122, 183)"><th>#</th><th>File Name</th><th>File Size</th><th>Expiration Day</th><th>Download</th></tr></thead>
                     <tbody>
                     <%if (files.length) { %>
                     <% files.forEach(function(file, index){ %>
-                    <tr><td><%= index+1 %></td><td><%= file.name %></td><td><%= file.size %></td><td><%= expiredDay %></td></tr>
+                    <tr><td><%= index+1 %></td><td id="fileName"><%= file.name %></td><td><%= file.size %></td><td><%= expiredDay %></td><td><button class="btn" onclick="download()">Get It!</button></td></tr>
                     <% })%>
                     <% }%>
                     </tbody>
@@ -97,12 +97,12 @@
             </fieldset>
 
 
-            <button type="button" class="btn btn-primary" id="button" onclick="download()">
-                I need them !
-            </button>
-            <footer>
-                <p>&copy;Unique 2016</p>
-            </footer>
+            <!--<button type="button" class="btn btn-primary" id="button" onclick="download()">-->
+                <!--I need them !-->
+            <!--</button>-->
+            <!--<footer>-->
+                <!--<p>&copy;Unique 2016</p>-->
+            <!--</footer>-->
             <!--<div><input id="expiredDay" value=<%=expiredDay%> hidden/></div>-->
             <div class="modal fade in" id="modal-container-2" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
                 <div class="modal-dialog">
@@ -144,7 +144,7 @@
         return theRequest;
     }
     function download() {
-        window.open('/downloading/'+ GetRequest());
+        window.open('/downloading/'+ GetRequest() +'/' + $('#fileName').text());
     }
 </script>
 </body>

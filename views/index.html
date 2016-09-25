@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>File Courier!</title>
+    <title>A HA! File Courier!</title>
     <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <link rel="stylesheet" href="/stylesheets/bootstrap-theme.min.css">
     <link rel="stylesheet" href="/stylesheets/dropZone.css">
@@ -22,7 +22,7 @@
         </div>
         <div class="col-md-6">
             <h3 class="text-center">
-                Welcome to use FileCourier
+                A HA! File Courier!
             </h3>
             <div class="alert alert-success alert-dismissable">
                 <button type="button" class="close" data-dismiss="alert">×</button>
@@ -39,7 +39,7 @@
                     </label>
                     </legend>
                     <div  style="width:40%" class="input-group">
-                        <input type="text" class="form-control" id="posterEmail" name="posterEmail" required>
+                        <input type="text" class="form-control" id="posterEmail" name="posterEmail" required data-toggle="tooltip" title="To receive the confirmation email, after confirmation, the files will be shared.">
                         <span class="input-group-addon" style="text-align:left"><strong>@SC.COM</strong></span>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     </label>
                         </legend>
                     <div  style="width:40%" class="input-group form_date" data-date-format="dd MM yyyy" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd">
-                        <input class="form-control"  type="date" value="" size="16"  name="duration" id="duration" required>
+                        <input class="form-control"  type="date" value="" size="16"  name="duration" id="duration" data-toggle="tooltip"  title="The files will be deleted from server after the date you selected">
                         <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
                         <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
 
@@ -63,7 +63,7 @@
                     </label>
                         </legend>
                     <div  style="width:100%" class="input-group">
-                    <input type="text" style="width: 83%;margin-right: 2%;"  class="form-control" id="receiverEmails" required  name="receiverEmails">
+                    <input type="text" style="width: 83%;margin-right: 2%;"  class="form-control" id="receiverEmails" required  name="receiverEmails" data-toggle="tooltip"  title="The email address of whom you want to share the files">
                     <input type="button" style="width: 15%; " class="btn btn-primary" id="checkname" value="check name">
                     </div>
                 </div>
@@ -90,9 +90,6 @@
             <button type="button" id="submit-all" class="btn btn-primary" disabled >
                 POST
             </button>
-            <footer>
-                <p>&copy;Unique 2016</p>
-            </footer>
         </div>
         <div class="col-md-3">
         </div>

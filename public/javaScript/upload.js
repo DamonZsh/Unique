@@ -2,7 +2,7 @@
  * Created by damon.zhang on 2016/9/9.
  */
 
-
+$(function () { $("[data-toggle='tooltip']").tooltip({placement:'auto bottom'}); });
 Dropzone.options.demoUpload = {
     url : "/uploadFiles",
     paramName: "file", // The name that will be used to transfer the file
@@ -66,4 +66,8 @@ var validate = function() {
 
 var isEmpty = function (param) {
     return param==null || param == undefined || param.trim() == "";
+}
+
+var showTips= function(){
+
 }

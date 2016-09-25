@@ -15,10 +15,11 @@ var formatDate = require('../Models/comm.js');
 var crypto = require('../Models/crypto.js');
 var exec = require('child_process').exec();
 var logger = require('../log.js').logger;
+var zip = require("node-native-zip");
 var router = express.Router();
 var app = express();
 
-    /* GET home page. */
+/* GET home page. */
 router.get('/', function (req, res) {
     res.render('index', {title: 'Welcome'});
 });
@@ -40,8 +41,8 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         filename = filename===undefined ?  file.originalname + "*" : filename + "" + file.originalname + "*";
         filesize = filesize===undefined ?  parseInt(file.size/1024) + "Kb*" : filesize + "" + parseInt(file.size/1024) + "Kb*";
     });
-    var new_file_name = filename.substring(0, filename.length-2);
-    var new_file_size = filesize.substring(0, filename.length-2);
+    var new_file_name = filename.substring(0, filename.length-1);
+    var new_file_size = filesize.substring(0, filename.length-1);
     var poster = req.body['email0'];
     var receiver = req.body['email1'];
     var subject0 = 'You have shared some files';
@@ -80,12 +81,17 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
 
         } );
     });
+
+
     var _filesname = new_file_name.split('*');
     var _filessize = new_file_size.split('*');
     var filejson =[];
+    var fileInof=[];
     for(var i =0 ; i< _filesname.length;i++){
         var _file = {name: _filesname[i] , size : _filessize[i]};
         filejson.push(_file);
+        var _fileToZip = {name: _filesname[i], path: subfolder+'/'+ _filesname[i]}
+        fileInof.push(_fileToZip);
     }
     app.render('../template/poster0.ejs',{name : poster, files : filejson, expiredDay : new_file_effective, emails : receiver , confirmation :server + "/confirmation/" + crypto.aesEncrypt(confirmationId)}, function(err, html){
         if(err){
@@ -135,18 +141,6 @@ router.post('/uploadFiles' , upload.array('file', 50), function (req, res) {
         }
     };
 
-    //zip the file
-    var cmd = 'zip -r ' + rootFolder + subfolder +' ./*'
-    //var cmd = 'makecab ' + subfolder + ' ' + subfolder +'.zip';
-    fs.exec(cmd, function (err, stdout, stderr) {
-        if(err){ logger.error('zip file error:'+stderr);}
-        else{
-            var data = JSON.parse(stdout);
-            logger.log(data);
-        }
-
-    })
-
 });
 
 router.get('/confirmation/:id', function (req, res) {
@@ -181,7 +175,7 @@ router.get('/confirmation/:id', function (req, res) {
 });
 router.post('/yesHereYouGo', function (req,res) {
     var id = crypto.aesDecrypt(req.body['id']);
-   dbpool("SELECT * FROM SHARING WHERE CONFIRMATION_ID = ? AND ISCONFIRMED = '0'", [id], function (err, rows) {
+    dbpool("SELECT * FROM SHARING WHERE CONFIRMATION_ID = ? AND ISCONFIRMED = '0'", [id], function (err, rows) {
         if (err) {
             logger.log(err);
             res.end("ERROR");
@@ -238,13 +232,14 @@ router.get("/download/:id",function (req,res) {
     });
 });
 
-router.get("/downloading/:id",function (req,res) {
+router.get("/downloading/:id/:fileName",function (req,res) {
     var encrypt = req.params.id;
     var id = crypto.aesDecrypt(encrypt);
     var confirmationId = id.substring(0, 36);
     var username = id.substring(36, id.length).substring(0, id.substring(36, id.length).indexOf('@'));
     var file_location = "";
     var ip = getClientIp(req);
+
     dbpool("SELECT * FROM SHARING WHERE CONFIRMATION_ID = ?", [confirmationId], function selectRes(err, rows) {
         if (err) {
             logger.error(err);
@@ -253,7 +248,8 @@ router.get("/downloading/:id",function (req,res) {
             if(rows.length>0){
                 file_path= rows[0]['FILE_LOCATION'];
                 var rootFolder = __dirname.replace("routes", "");
-                res.download(rootFolder + file_path+ '.zip', file_path+ '.zip', function(err){
+                console.info(rootFolder + file_path+ '/'+ req.params.fileName);
+                res.download(rootFolder + file_path+ '/'+ req.params.fileName, req.params.fileName, function(err){
                     if(err){
                         logger.error(err);
                     }
@@ -263,6 +259,8 @@ router.get("/downloading/:id",function (req,res) {
                         logger.error(err);
                     }
                 })
+            }else{
+                res.end('error');
             }
 
         }
