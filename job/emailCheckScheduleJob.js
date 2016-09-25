@@ -12,7 +12,7 @@ var mailServerAddress = "filecourier@163.com";
 var logger = require('../log.js').logger;
 
 var times = [];
-for(var i =1 ;i < 60;i++) times.push(i = i+ 4);
+for(var i =1 ;i < 60;i++) times.push(i);
 
 rule.minute = times;
 
@@ -47,7 +47,7 @@ var j = schedule.scheduleJob(rule, function(){
                                 }
                             });
                         }else{
-                            dbpool("UPDATE MAIL_TO SET EMAIL_STATUS='0'  WHERE ID='" + ID +"';",function(updateStatusError,updatedValues){
+                            dbpool("UPDATE MAIL_TO SET EMAIL_STATUS='1'  WHERE ID='" + ID +"';",function(updateStatusError,updatedValues){
                                 if(err){
                                     logger.error('update status error : ' + updateStatusError);
                                 }else {
