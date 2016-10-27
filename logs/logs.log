@@ -1,0 +1,165 @@
+[2016-09-25 10:25:00.294] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.308] [INFO] dateFileLog - start to send the email to 
+[2016-09-25 10:25:00.353] [INFO] dateFileLog - start to send the email to 330167501@qq.com
+[2016-09-25 10:25:00.362] [INFO] dateFileLog - start to send the email to 330167501@qq.com
+[2016-09-25 10:25:00.365] [INFO] dateFileLog - start to send the email to 330167501@qq.com
+[2016-09-25 10:25:00.367] [INFO] dateFileLog - start to send the email to 330167501@qq.com
+[2016-09-25 10:25:00.369] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:25:00.372] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:25:00.374] [INFO] dateFileLog - start to send the email to dfsfds@1e321.com
+[2016-09-25 10:25:00.375] [INFO] dateFileLog - start to send the email to 32131
+[2016-09-25 10:25:00.376] [INFO] dateFileLog - start to send the email to 
+[2016-09-25 10:25:00.378] [INFO] dateFileLog - start to send the email to 
+[2016-09-25 10:25:00.379] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:25:00.380] [INFO] dateFileLog - start to send the email to 
+[2016-09-25 10:25:00.381] [INFO] dateFileLog - start to send the email to 32131
+[2016-09-25 10:25:00.382] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:25:00.383] [INFO] dateFileLog - start to send the email to zdsad
+[2016-09-25 10:25:00.384] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:25:00.385] [INFO] dateFileLog - start to send the email to 32131
+[2016-09-25 10:25:00.386] [INFO] dateFileLog - start to send the email to zdsad
+[2016-09-25 10:25:00.386] [INFO] dateFileLog - start to send the email to zdsad
+[2016-09-25 10:25:00.388] [INFO] dateFileLog - start to send the email to zdsad
+[2016-09-25 10:25:00.395] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.547] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.553] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.560] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.562] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.563] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.565] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.566] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.569] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.570] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.571] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.578] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.578] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.620] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.623] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.626] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.631] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.632] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.634] [INFO] dateFileLog - 
+[2016-09-25 10:25:00.819] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:25:00.837] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:25:00.894] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:25:00.948] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:25:00.995] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:25:01.057] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp13,EcCowABHvgaRNedXy4YqCg--.12201S2 1474770321,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp13&time=1474770321
+[2016-09-25 10:25:01.160] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:25:01.383] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp13,EcCowACHEkGRNedX0IYqCg--.12599S2 1474770321,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp13&time=1474770321
+[2016-09-25 10:25:01.419] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp13,EcCowAAXu4iRNedX0YYqCg--.13524S2 1474770321,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp13&time=1474770321
+[2016-09-25 10:25:01.529] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp13,EcCowADXnQ6RNedX0oYqCg--.13787S2 1474770322,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp13&time=1474770322
+[2016-09-25 10:25:01.870] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:26:00.754] [INFO] dateFileLog - Hello
+[2016-09-25 10:26:00.763] [INFO] dateFileLog - <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body style="margin: 0; padding: 0;">
+  <h4>Hello! 31 have shared some files with you.</h4>
+　 <fieldset>
+      <legend>File Information:</legend>
+      <table>
+          <thead><tr style="background-color: rgb(51, 122, 183)"><th>#</th><th>File Name</th><th>File Size</th><th>Expired Day</th></tr></thead>
+          <tbody>
+          
+          
+          <tr><td>1</td><td>数据透视表与数据透视图.xls</td><td>41Kb</td><td>2016-09-30</td></tr>
+          
+          <tr><td>2</td><td>统计不同年龄段员工信息表.xl</td><td>18Kb</td><td>2016-09-30</td></tr>
+          
+          
+          </tbody>
+      </table>
+    </fieldset>
+  <h4>Please <a href=http://localhost:3000/download/a11e9f34a329d43103e1b3acc6cafa57240a3f7f95fd59dc0bb8e9441c80287749dfc99e65776feb9482a44719c01328>click here</a> to view the detail.</h4>
+</body>
+</html>
+[2016-09-25 10:26:00.796] [INFO] dateFileLog - data inserted into SHARING
+[2016-09-25 10:26:00.797] [INFO] dateFileLog - ::1 have uploaded the file //数据透视表与数据透视图.xls//
+[2016-09-25 10:26:00.799] [INFO] dateFileLog - data inserted into MAIL_TO
+[2016-09-25 10:26:00.800] [INFO] dateFileLog - ::1 have uploaded the file //统计不同年龄段员工信息表.xls//
+[2016-09-25 10:26:00.801] [INFO] dateFileLog - data inserted into MAIL_TO
+[2016-09-25 10:30:00.240] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.255] [INFO] dateFileLog - start to send the email to 
+[2016-09-25 10:30:00.305] [INFO] dateFileLog - start to send the email to 330167501@qq.com
+[2016-09-25 10:30:00.308] [INFO] dateFileLog - start to send the email to 330167501@qq.com
+[2016-09-25 10:30:00.310] [INFO] dateFileLog - start to send the email to 330167501@qq.com
+[2016-09-25 10:30:00.315] [INFO] dateFileLog - start to send the email to 330167501@qq.com
+[2016-09-25 10:30:00.318] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:30:00.321] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:30:00.325] [INFO] dateFileLog - start to send the email to dfsfds@1e321.com
+[2016-09-25 10:30:00.328] [INFO] dateFileLog - start to send the email to 32131
+[2016-09-25 10:30:00.331] [INFO] dateFileLog - start to send the email to 
+[2016-09-25 10:30:00.333] [INFO] dateFileLog - start to send the email to 
+[2016-09-25 10:30:00.336] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:30:00.338] [INFO] dateFileLog - start to send the email to 
+[2016-09-25 10:30:00.340] [INFO] dateFileLog - start to send the email to 32131
+[2016-09-25 10:30:00.340] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:30:00.342] [INFO] dateFileLog - start to send the email to zdsad
+[2016-09-25 10:30:00.343] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:30:00.344] [INFO] dateFileLog - start to send the email to 32131
+[2016-09-25 10:30:00.345] [INFO] dateFileLog - start to send the email to zdsad
+[2016-09-25 10:30:00.346] [INFO] dateFileLog - start to send the email to zdsad
+[2016-09-25 10:30:00.347] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:30:00.348] [INFO] dateFileLog - start to send the email to 31
+[2016-09-25 10:30:00.349] [INFO] dateFileLog - start to send the email to zdsad
+[2016-09-25 10:30:00.350] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.495] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.499] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.503] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.505] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.513] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.514] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.514] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.517] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.522] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.523] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.524] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.524] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.525] [ERROR] dateFileLog - send email error : Error: Invalid greeting from server:
+421 Too many connections: 421 Too many connections
+[2016-09-25 10:30:00.588] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.590] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.592] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.595] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.598] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.599] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.599] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.599] [INFO] dateFileLog - 
+[2016-09-25 10:30:00.721] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:30:00.805] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:30:00.864] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:30:00.975] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:30:01.002] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp8,DMCowACnRje8NudXQ2lTCw--.35595S2 1474770620,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp8&time=1474770620
+[2016-09-25 10:30:01.069] [ERROR] dateFileLog - send email error : Error: No recipients defined
+[2016-09-25 10:30:01.090] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp8,DMCowADnlTa8NudXRmlTCw--.24585S2 1474770620,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp8&time=1474770620
+[2016-09-25 10:30:01.290] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp8,DMCowAB3dE28NudXSGlTCw--.58375S2 1474770620,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp8&time=1474770620
+[2016-09-25 10:30:01.405] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp8,DMCowAC3Xne8NudXS2lTCw--.59404S2 1474770621,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp8&time=1474770621
+[2016-09-25 10:30:01.456] [ERROR] dateFileLog - send email error : Error: Message failed: 554 DT:SPM 163 smtp8,DMCowACnTne8NudXSmlTCw--.58415S2 1474770621,please see http://mail.163.com/help/help_spam_16.htm?ip=120.194.248.9&hostid=smtp8&time=1474770621
+[2016-09-25 10:35:00.228] [INFO] dateFileLog - 
